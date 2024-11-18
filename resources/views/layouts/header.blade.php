@@ -2,9 +2,9 @@
     <div class="wrap">
         <div class="header-left">
             <a href="index-2.html">
-                <img class="" id="logo_header_mobile" alt="" src="{{asset('assets/images/logo/logo.png')}}"
-                    data-light="images/logo/logo.png" data-dark="images/logo/logo.png"
-                    data-width="154px" data-height="52px" data-retina="images/logo/logo.png">
+                <img class="" id="logo_header_mobile" alt="" src="{{ asset('assets/images/logo/logo.png') }}"
+                    data-light="images/logo/logo.png" data-dark="images/logo/logo.png" data-width="154px"
+                    data-height="52px" data-retina="images/logo/logo.png">
             </a>
             <div class="button-show-hide">
                 <i class="icon-menu-left"></i>
@@ -13,8 +13,8 @@
 
             <form class="form-search flex-grow">
                 <fieldset class="name">
-                    <input type="text" placeholder="Search here..." class="show-search" name="name"
-                        tabindex="2" value="" aria-required="true" required="">
+                    <input type="text" placeholder="Search here..." class="show-search" name="name" tabindex="2"
+                        value="" aria-required="true" required="">
                 </fieldset>
                 <div class="button-submit">
                     <button class="" type="submit"><i class="icon-search"></i></button>
@@ -31,7 +31,7 @@
                             <ul>
                                 <li class="product-item gap14 mb-10">
                                     <div class="image no-bg">
-                                        <img src="{{asset('assets/images/products/17.png')}}" alt="">
+                                        <img src="{{ asset('assets/images/products/17.png') }}" alt="">
                                     </div>
                                     <div class="flex items-center justify-between gap20 flex-grow">
                                         <div class="name">
@@ -45,7 +45,7 @@
                                 </li>
                                 <li class="product-item gap14 mb-10">
                                     <div class="image no-bg">
-                                        <img src="{{asset('assets/images/products/18.png')}}" alt="">
+                                        <img src="{{ asset('assets/images/products/18.png') }}" alt="">
                                     </div>
                                     <div class="flex items-center justify-between gap20 flex-grow">
                                         <div class="name">
@@ -59,7 +59,7 @@
                                 </li>
                                 <li class="product-item gap14">
                                     <div class="image no-bg">
-                                        <img src="{{asset('assets/images/products/19.png')}}" alt="">
+                                        <img src="{{ asset('assets/images/products/19.png') }}" alt="">
                                     </div>
                                     <div class="flex items-center justify-between gap20 flex-grow">
                                         <div class="name">
@@ -82,7 +82,7 @@
                             <ul>
                                 <li class="product-item gap14 mb-10">
                                     <div class="image no-bg">
-                                        <img src="{{asset('assets/images/products/20.png')}}" alt="">
+                                        <img src="{{ asset('assets/images/products/20.png') }}" alt="">
                                     </div>
                                     <div class="flex items-center justify-between gap20 flex-grow">
                                         <div class="name">
@@ -96,7 +96,7 @@
                                 </li>
                                 <li class="product-item gap14 mb-10">
                                     <div class="image no-bg">
-                                        <img src="{{asset('assets/images/products/21.png')}}" alt="">
+                                        <img src="{{ asset('assets/images/products/21.png') }}" alt="">
                                     </div>
                                     <div class="flex items-center justify-between gap20 flex-grow">
                                         <div class="name">
@@ -110,7 +110,7 @@
                                 </li>
                                 <li class="product-item gap14 mb-10">
                                     <div class="image no-bg">
-                                        <img src="{{asset('assets/images/products/22.png')}}" alt="">
+                                        <img src="{{ asset('assets/images/products/22.png') }}" alt="">
                                     </div>
                                     <div class="flex items-center justify-between gap20 flex-grow">
                                         <div class="name">
@@ -124,7 +124,7 @@
                                 </li>
                                 <li class="product-item gap14">
                                     <div class="image no-bg">
-                                        <img src="{{asset('assets/images/products/23.png')}}" alt="">
+                                        <img src="{{ asset('assets/images/products/23.png') }}" alt="">
                                     </div>
                                     <div class="flex items-center justify-between gap20 flex-grow">
                                         <div class="name">
@@ -144,15 +144,14 @@
 
             <div class="popup-wrap message type-header">
                 <div class="dropdown">
-                    <button class="btn btn-secondary dropdown-toggle" type="button"
-                        id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton2"
+                        data-bs-toggle="dropdown" aria-expanded="false">
                         <span class="header-item">
                             <span class="text-tiny">1</span>
                             <i class="icon-bell"></i>
                         </span>
                     </button>
-                    <ul class="dropdown-menu dropdown-menu-end has-content"
-                        aria-labelledby="dropdownMenuButton2">
+                    <ul class="dropdown-menu dropdown-menu-end has-content" aria-labelledby="dropdownMenuButton2">
                         <li>
                             <h6>Notifications</h6>
                         </li>
@@ -214,20 +213,19 @@
 
             <div class="popup-wrap user type-header">
                 <div class="dropdown">
-                    <button class="btn btn-secondary dropdown-toggle" type="button"
-                        id="dropdownMenuButton3" data-bs-toggle="dropdown" aria-expanded="false">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton3"
+                        data-bs-toggle="dropdown" aria-expanded="false">
                         <span class="header-user wg-user">
                             <span class="image">
-                                <img src="{{asset('assets/images/avatar/user-1.png')}}" alt="">
+                                <img src="{{ asset('assets/images/avatar/user-1.png') }}" alt="">
                             </span>
                             <span class="flex flex-column">
                                 <span class="body-title mb-2">Kristin Watson</span>
-                                <span class="text-tiny">Admin</span>
+                                <span class="text-tiny">{{ auth()->user()?->name}}</span>
                             </span>
                         </span>
                     </button>
-                    <ul class="dropdown-menu dropdown-menu-end has-content"
-                        aria-labelledby="dropdownMenuButton3">
+                    <ul class="dropdown-menu dropdown-menu-end has-content" aria-labelledby="dropdownMenuButton3">
                         <li>
                             <a href="#" class="user-item">
                                 <div class="icon">
@@ -262,12 +260,21 @@
                             </a>
                         </li>
                         <li>
-                            <a href="{{route('admin.index')}}" class="user-item">
-                                <div class="icon">
-                                    <i class="icon-log-out"></i>
-                                </div>
-                                <div class="body-title-2">Log out</div>
-                            </a>
+                            <form action="{{ auth('admins')->user() ? route('logout') : route('vendors.logout') }}"
+                                method="POST">
+                                @csrf
+                                <button type="submit">Logout</button>
+                            </form>
+                            <ul>
+                                @foreach (LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
+                                    <li>
+                                        <a rel="alternate" hreflang="{{ $localeCode }}"
+                                            href="{{ LaravelLocalization::getLocalizedURL($localeCode, null, [], true) }}">
+                                            {{ $properties['native'] }}
+                                        </a>
+                                    </li>
+                                @endforeach
+                            </ul>
                         </li>
                     </ul>
                 </div>

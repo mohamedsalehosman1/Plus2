@@ -43,7 +43,7 @@
                                     </p>
                                 </div>
                             </div>
-                            <form action="{{ route('login') }}" method="POST" class="signin-form">
+                            <form action="{{ route('login.show') }}" method="POST" class="signin-form">
                                 @csrf
                                 <div class="form-group">
                                     <label>Email</label>

@@ -13,9 +13,14 @@ return [
 
     'roles_structure' => [
         'super_admin' => [
-        'roles' => 'c,r,u,d,s',
+            'roles' => 'c,r,u,d,s',
+            'admins' => 'c,r,u,d,s,b,f,re,rt',
+            'vendors' => 'c,r,u,d,s,b,f,re,rt',
+        ],
+        'vendor' => [
+
+        ],
     ],
-],
 
     'permissions_map' => [
         'c' => 'create',

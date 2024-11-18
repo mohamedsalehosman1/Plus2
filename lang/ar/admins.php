@@ -1,0 +1,28 @@
+<?php
+
+return [
+    'create_admin' => 'إنشاء مسؤول',
+    'edit_admin' => 'تعديل المسؤول',
+    'admin_list' => 'قائمة المسؤولين',
+    'show_admin' => 'عرض المسؤول',
+    'soft_deleted_admins' => 'المسؤولين المحذوفين',
+    'back_to_admin_list' => 'الرجوع إلى قائمة المسؤولين',
+    'admin_name' => 'الاسم',
+    'admin_email' => 'البريد الإلكتروني',
+    'password' => 'كلمة المرور',
+    'confirm_password' => 'تأكيد كلمة المرور',
+    'assign_role' => 'تعيين الدور',
+    'create_new_admin' => 'إنشاء مسؤول جديد',
+    'restore_admin' => 'استرجاع المسؤول المحذوف',
+    'delete_admin' => 'حذف المسؤول',
+    'update_admin' => 'تحديث المسؤول',
+    'admin_actions' => 'إجراءات المسؤول',
+    'deleted_at' => 'تاريخ الحذف',
+    'actions' => 'الإجراءات',
+    'view_soft_deleted_admins' => 'عرض المسؤولين المحذوفين',
+    'admin_creation_success' => 'تم إنشاء المسؤول بنجاح',
+    'admin_update_success' => 'تم تحديث المسؤول بنجاح',
+    'admin_restore_success' => 'تم استرجاع المسؤول بنجاح',
+    'admin_delete_success' => 'تم حذف المسؤول بنجاح',
+    'restore' => 'استرجاع',
+];

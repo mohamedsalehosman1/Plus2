@@ -11,7 +11,7 @@ use Laratrust\Traits\HasRolesAndPermissions;
 
 class Admin extends Authenticatable implements LaratrustUser
 {
-    use HasFactory, SoftDeletes , HasRolesAndPermissions;
+    use HasFactory, SoftDeletes, HasRolesAndPermissions;
 
     // Table name (optional, if different from pluralized model name)
     protected $table = 'admins';
@@ -38,16 +38,10 @@ class Admin extends Authenticatable implements LaratrustUser
 
     // Define the attributes that should be cast to native types
     protected $casts = [
+        'password' => 'hashed',
         'email_verified_at' => 'datetime',
         'blocked_at' => 'datetime',
         'last_login_at' => 'datetime',
         'deleted_at' => 'datetime',
     ];
-
-    // Mutator to hash password before saving to the database
-    public function setPasswordAttribute($password)
-    {
-        // Hash the password before saving
-        $this->attributes['password'] = Hash::make($password);
-    }
 }

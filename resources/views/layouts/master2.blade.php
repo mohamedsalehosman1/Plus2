@@ -21,8 +21,8 @@
     </div>
 </div>-->
 
+@yield('content')
 <div class="section-content-right">
-                    @yield('content')
 
                 </div>
             </div>

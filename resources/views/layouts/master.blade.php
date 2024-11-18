@@ -25,8 +25,7 @@
 
                 <div class="section-content-right">
                     @include('layouts.header')
-                    @include('layouts.content')
-
+                    @yield('content')
                 </div>
             </div>
         </div>

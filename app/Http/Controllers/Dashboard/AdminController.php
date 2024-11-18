@@ -3,83 +3,108 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\AdminRequest;
 use App\Models\Admin;
+use App\Models\Role;
+use App\Repositories\AdminRepository;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 
-class AdminController extends Controller
+class AdminController extends Controller implements HasMiddleware
 {
-    /**
-     * Display a listing of the resource.
-     */
+    private $repository;
+
+    public function __construct(AdminRepository $repository)
+    {
+        $this->repository = $repository;
+    }
+
+    public static function middleware()
+    {
+        return [
+            new Middleware("permission:read_admins", only: ['index', "trash"]),
+            new Middleware("permission:create_admins", only: ['create', 'store']),
+            new Middleware("permission:show_admins", only: ['show']),
+            new Middleware("permission:block_admins", only: ['block', 'unblock']),
+            new Middleware("permission:update_admins", only: ['update', "edit"]),
+            new Middleware("permission:forceDelete_admins", only: ['destroy']),
+            new Middleware("permission:delete_admins", only: ['destroy']),
+            new Middleware("permission:readTrashed_admins", only: ['trash']),
+            new Middleware("permission:restore_admins", only: ['restore']),
+
+        ];
+    }
+
+
     public function index()
     {
-
-        return view('Admin.login');
+        $admins = $this->repository->index();
+        return view('admins.index', get_defined_vars());
     }
-    public function login(Request $request)
+
+    public function trash()
     {
-        $request->validate([
-            'email' => 'required|email',
-            'password' => 'required',
-        ]);
-
-        if (Auth::guard("admins")->attempt(['email' => $request->email, 'password' => $request->password])) {
-
-            return redirect('/');
-        }
-
-        return back()->withErrors([
-            'email' => 'البريد الإلكتروني أو كلمة المرور غير صحيحة',
-        ]);
+        $admins = $this->repository->trash();
+        return view('admins.trash', get_defined_vars());
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        //
+        $admins = Admin::with('roles')->get();
+        $roles = Role::all();
+        return view('admins.create', get_defined_vars());
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+
+    public function store(AdminRequest $request)
     {
-        //
+        $admin = $this->repository->store($request->validated());
+        $admin->roles()->sync($request->roles);
+
+        return redirect()->route('admins.index')->with('success', __('Admin created successfully.'));
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(Admin $admin)
     {
-        //
-        return view('dashboard.login');
+        return view('admins.show', get_defined_vars());
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(Admin $admin)
     {
-        //
+        return view('admins.update', compact('admin'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Admin $admin)
+    public function update(AdminRequest $request, Admin $admin)
     {
-        //
+        // dd($request);
+        $this->repository->update($request->validated(), $admin);
+        return redirect()->route('admins.index')->with('success', __('Admin updated successfully.'));
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(Admin $admin)
     {
-        //
+        $this->repository->destroy($admin);
+        return redirect()->route('admins.index')->with('success', __('Admin soft deleted successfully.'));
+    }
+
+    public function restore($id)
+    {
+        $model = $this->repository->find($id, true);
+        $this->repository->restore($model);
+
+        return redirect()->route('admins.trash')->with('success', __('Admin restored successfully.'));
+    }
+
+    public function block(Admin $admin)
+    {
+        $this->repository->block($admin);
+        return redirect()->route('admins.index')->with('success', __('Admin blocked successfully.'));
+    }
+
+    public function unblock(Admin $admin)
+    {
+        $this->repository->unblock($admin);
+        return redirect()->route('admins.index')->with('success', __('Admin unblocked successfully.'));
     }
 }
