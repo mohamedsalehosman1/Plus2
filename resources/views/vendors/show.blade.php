@@ -2,34 +2,39 @@
 
 @section('content')
     <div class="main-content">
-
         <div class="main-content-inner">
             <div class="tf-section mb-10">
 
                 <div class="wg-box">
-                    <h6>{{ trans('admins.show_admin') }}</h6>
+                    <h6>{{ trans('vendors.show_vendor') }}</h6>
 
                     <div class="form-group">
-                        <label for="name">{{ trans('admins.admin_name') }}</label>
-                        <input type="text" name="name" id="name" class="form-control" value="{{ $admin->name }}"
-                            required>
+                        <label for="name">{{ trans('vendors.vendor_name') }}</label>
+                        <input type="text" name="name" id="name" class="form-control" value="{{ $vendor->name }}"
+                            required readonly>
                     </div>
 
                     <div class="form-group">
-                        <label for="email">{{ trans('admins.admin_email') }}</label>
-                        <input type="email" name="email" id="email" class="form-control" value="{{ $admin->email }}"
-                            required>
+                        <label for="email">{{ trans('vendors.vendor_email') }}</label>
+                        <input type="email" name="email" id="email" class="form-control"
+                            value="{{ $vendor->email }}" required readonly>
                     </div>
 
                     <div class="form-group">
-                        <label for="password">{{ trans('admins.password') }} ({{ trans('admins.leave_blank_for_current_password') }})</label>
-                        <input type="password" name="password" id="password" class="form-control">
+                        <label for="image">{{ trans('vendors.upload_image') }}</label>
+                        @if($vendor->getFirstMediaUrl('images'))
+                            <div>
+                                <img src="{{ $vendor->getFirstMediaUrl('images') }}" alt="{{ $vendor->name }} image" class="img-fluid" width="150">
+                            </div>
+                        @else
+                            <p>{{ trans('vendors.no_image') }}</p>
+                        @endif
                     </div>
 
-                    <div class="form-group">
-                        <label for="password_confirmation">{{ trans('admins.confirm_password') }}</label>
-                        <input type="password" name="password_confirmation" id="password_confirmation" class="form-control">
-                    </div>
+                    <!-- You can add an option to update the image if needed -->
+
+
+
                 </div>
             </div>
         </div>

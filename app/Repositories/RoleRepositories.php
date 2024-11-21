@@ -2,7 +2,6 @@
 
 namespace App\Repositories;
 
-use App\Models\Admin;
 use App\Models\Role;
 use Illuminate\Database\Eloquent\Collection;
 
@@ -13,10 +12,7 @@ class RoleRepositories implements CrudsInterface
     {
         return Role::paginate(request("perPage"));
     }
-    public function trash()
-    {
-        return Role::onlyTrashed()->paginate(request("perPage"));
-    }
+
 
     public function find($id, $withTrashed = false)
     {
@@ -36,5 +32,9 @@ class RoleRepositories implements CrudsInterface
     public function destroy($model)
     {
         return $model->delete();
+    }
+    public function forceDelete($model)
+    {
+        return $model->forceDelete();
     }
 }

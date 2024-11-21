@@ -1,0 +1,25 @@
+<?php
+return [
+    'Coupons' => 'كوبونات',
+    'NewCoupon' => 'أضافه كوبون',
+    'CouponList' => 'قائمة الكوبونات',
+    'AddNewCoupon' => 'إضافة كوبون جديد',
+    'CouponCode' => 'رمز الكوبون',
+    'DiscountPercent' => 'نسبة الخصم',
+    'MaxDiscount' => 'الحد الأقصى للخصم',
+    'Max_use' => 'الحد الأقصى للاستخدام',
+    'Max_use_per_user' => 'الحد الأقصى للمستخدم',
+
+    'StartDate' => 'تاريخ البدء',
+    'EndDate' => 'تاريخ الانتهاء',
+    'MaxCoupons' => 'عدد الكوبونات المتاحة',
+    'MaxCouponsPerUser' => 'عدد الكوبونات المسموح بها لكل مستخدم',
+    'Vendor' => 'البائع',
+    'ActiveCoupon' => 'تفعيل الكوبون',
+    'AddCoupon' => 'إضافة كوبون',
+    'Edit' => 'تعديل الكوبون',
+    'Actions' => 'الاجراءات',
+    'EditCoupon' => 'تعديل الكوبون',
+    'UpdateCoupon' => 'تحديث الكوبون',
+    'Cancel' => 'إلغاء',
+];

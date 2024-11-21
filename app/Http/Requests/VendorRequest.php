@@ -22,7 +22,6 @@ class VendorRequest extends FormRequest
      */
     public function rules(): array
     {
-        // dd($this);
         if (request()->ismethod('post')) {
             return $this->StoreRules();
         } else {
@@ -36,7 +35,9 @@ class VendorRequest extends FormRequest
 
             'name' => 'required|string|max:255',
             'email' => "required|email|unique:admins",
-            'password' => 'required|string|min:8',
+            'password' => 'required|string|min:8|confirmed',
+            'image' => 'nullable|file|mimes:jpeg,png,jpg,gif,svg|max:2048',
+
         ]);
     }
     public function UpdateRules()
@@ -44,7 +45,9 @@ class VendorRequest extends FormRequest
         return RuleFactory::make([
             'name' => 'required|string|max:255',
             'email' => "required|email",
-            'password' => 'string|min:8|confirmed',
+            'password' => 'nullable|string|min:8|confirmed',
+            'image' => 'nullable|file|mimes:jpeg,png,jpg,|max:2048',
+
         ]);
     }
 }

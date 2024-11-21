@@ -7,27 +7,35 @@
                 <div class="wg-box">
                     <h3>{{ trans('roles.create_role') }}</h3>
 
-                    <!-- Role Creation Form -->
                     <form method="POST" action="{{ route('roles.store') }}">
                         @csrf
 
-                        <!-- Name Input -->
                         <div class="form">
                             <label for="name">{{ trans('roles.role_name') }}</label>
-                            <input type="text" name="name" id="name" class="form-control" required>
+                            <input type="text" name="name" id="name" class="form-control">
+                            @error('name')
+                                <div class="alert alert-danger">{{ $message }}</div>
+                            @enderror
                         </div>
 
                         <!-- Display Name Input -->
                         <div class="form">
                             <label for="display_name">{{ trans('roles.display_name') }}</label>
-                            <input type="text" name="display_name" id="display_name" class="form-control" required>
+                            <input type="text" name="display_name" id="display_name" class="form-control">
+                            @error('display_name')
+                                <div class="alert alert-danger">{{ $message }}</div>
+                            @enderror
                         </div>
 
                         <!-- Description Input -->
                         <div class="form">
                             <label for="description">{{ trans('roles.description') }}</label>
-                            <input type="text" name="description" id="description" class="form-control" required>
+                            <input type="text" name="description" id="description" class="form-control">
+                            @error('description')
+                                <div class="alert alert-danger">{{ $message }}</div>
+                            @enderror
                         </div>
+
 
                         <!-- Permissions Select Box -->
                         <div class="form">
@@ -39,7 +47,9 @@
                                     </option>
                                 @endforeach
                             </select>
-
+                            @error('permissions')
+                                <div class="alert alert-danger">{{ $message }}</div>
+                            @enderror
                         </div>
 
                         <!-- Submit Button -->

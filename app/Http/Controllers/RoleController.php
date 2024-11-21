@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\RoleRequest;
+use App\Models\Admin;
 use App\Models\Permission;
 use App\Models\Role;
 use App\Repositories\RoleRepositories;
@@ -34,6 +35,8 @@ class RoleController extends Controller implements HasMiddleware
         $roles = $this->repository->index();
         return view('roles.index', get_defined_vars());
     }
+
+
     public function create()
     {
         $permissions = Permission::all();
@@ -50,12 +53,35 @@ class RoleController extends Controller implements HasMiddleware
     }
 
 
-    public function show(Role $role) {}
+    public function show(Role $role)
+    {
+        $permissions = Permission::all();
+        $rolePermissions = $role->permissions->pluck('id')->toArray();
 
-    public function edit(Role $role) {}
+        return view('roles.show', compact('role', 'permissions', 'rolePermissions'));
+    }
 
 
-    public function update(Request $request, Role $role) {}
+    public function edit(Role $role)
+    {
 
-    public function destroy($model) {}
+        $permissions = Permission::all();
+        $rolePermissions = $role->permissions->pluck('id')->toArray();
+        return view('roles.update', get_defined_vars());
+    }
+
+
+    public function update(RoleRequest $request, Role $role)
+    {
+        $this->repository->update($request->validated(), $role);
+        $role->permissions()->sync($request->permissions);
+
+        return redirect()->route('roles.index')->with('success', __('Role updated successfully.'));
+    }
+
+    public function destroy(Role $role)
+    {
+        $this->repository->destroy($role);
+        return redirect()->route('roles.index')->with('success', __('Role soft deleted successfully.'));
+    }
 }

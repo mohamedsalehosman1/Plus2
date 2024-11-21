@@ -8,7 +8,9 @@
                 <div class="wg-box">
                     <h6>{{ trans('roles.roles_list') }}</h6>
 
-                    <a href="{{ route('roles.create') }}" class="btn btn-primary mb-3">{{ trans('roles.create_new_role') }}</a>
+
+                    <a href="{{ route('roles.create') }}"
+                        class="btn btn-primary mb-3">{{ trans('roles.create_new_role') }}</a>
 
                     @if (session('success'))
                         <div class="alert alert-success">{{ session('success') }}</div>
@@ -20,6 +22,7 @@
                                 <th>{{ trans('roles.name') }}</th>
                                 <th>{{ trans('roles.display_name') }}</th>
                                 <th>{{ trans('roles.description') }}</th>
+                                <th>{{ trans('roles.Actions') }}</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -28,6 +31,10 @@
                                     <td>{{ $role->name }}</td>
                                     <td>{{ $role->display_name }}</td>
                                     <td>{{ $role->description }}</td>
+                                    <td> @include('roles.actions.edit')
+                                        @include('roles.actions.delete')
+                                        @include('roles.actions.show')
+                                    </td>
                                 </tr>
                             @endforeach
                         </tbody>

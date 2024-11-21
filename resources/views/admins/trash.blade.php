@@ -9,7 +9,8 @@
                     <h6>{{ trans('admins.soft_deleted_admins') }}</h6>
 
                     <!-- زر العودة إلى صفحة الأدمن الرئيسية -->
-                    <a href="{{ route('admins.index') }}" class="btn btn-secondary mb-3">{{ trans('admins.back_to_admin_list') }}</a>
+                    <a href="{{ route('admins.index') }}"
+                        class="btn btn-secondary mb-3">{{ trans('admins.back_to_admin_list') }}</a>
 
                     @if (session('success'))
                         <div class="alert alert-success">{{ session('success') }}</div>
@@ -29,8 +30,17 @@
                                     <td>{{ $admin->name }}</td>
                                     <td>{{ $admin->deleted_at }}</td> <!-- عرض تاريخ الحذف -->
                                     <td>
-                                        <!-- استرجاع الـ Admin المحذوف -->
-                                        <a href="{{ route('admins.restore', $admin->id) }}" class="btn btn-success btn-sm">{{ trans('admins.restore') }}</a>
+                                        <a href="{{ route('admins.restore', $admin->id) }}"
+                                            class="btn btn-success btn-sm">{{ trans('admins.restore') }}</a>
+                                        <form action="{{ route('admins.forcedelete', $admin->id) }}" method="POST"
+                                            style="display:inline;">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-danger btn-sm"
+                                                onclick="return confirm('{{ trans('admins.are_you_sure') }}');">
+                                                {{ trans('admins.delete_permanently') }}
+                                            </button>
+                                        </form>
                                     </td>
                                 </tr>
                             @endforeach

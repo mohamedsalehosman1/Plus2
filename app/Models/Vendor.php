@@ -8,10 +8,13 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Hash;
 use Laratrust\Contracts\LaratrustUser;
 use Laratrust\Traits\HasRolesAndPermissions;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 
-class Vendor extends Authenticatable implements LaratrustUser
+class Vendor extends Authenticatable implements LaratrustUser, HasMedia
 {
     use HasFactory, SoftDeletes, HasRolesAndPermissions;
+    use InteractsWithMedia;
 
     // Table name (optional, if different from pluralized model name)
     protected $table = 'vendors';
@@ -44,4 +47,8 @@ class Vendor extends Authenticatable implements LaratrustUser
         'last_login_at' => 'datetime',
         'deleted_at' => 'datetime',
     ];
+    public function coupons()
+    {
+        return $this->hasMany(Coupon::class);
+    }
 }

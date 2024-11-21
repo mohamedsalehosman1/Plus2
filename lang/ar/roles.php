@@ -9,6 +9,6 @@ return [
     'create_new_role' => 'إنشاء دور جديد',
     'roles_list' => 'قائمة الأدوار',
     'name' => 'الاسم',
-
+    'Actions'=>'الأجراءات',
     'create_role_button' => 'إنشاء الدور',
 ];

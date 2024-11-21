@@ -12,7 +12,6 @@ class AuthVendorController extends Controller
 
     //
     public function index()
-
     {
         return view('vendors.login');
     }

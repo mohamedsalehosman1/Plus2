@@ -8,10 +8,12 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Hash;
 use Laratrust\Contracts\LaratrustUser;
 use Laratrust\Traits\HasRolesAndPermissions;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 
-class Admin extends Authenticatable implements LaratrustUser
+class Admin extends Authenticatable implements LaratrustUser, HasMedia
 {
-    use HasFactory, SoftDeletes, HasRolesAndPermissions;
+    use HasFactory, SoftDeletes, HasRolesAndPermissions, InteractsWithMedia;
 
     // Table name (optional, if different from pluralized model name)
     protected $table = 'admins';
@@ -44,4 +46,8 @@ class Admin extends Authenticatable implements LaratrustUser
         'last_login_at' => 'datetime',
         'deleted_at' => 'datetime',
     ];
+    public function registerMediaCollections(): void
+    {
+        $this->addMediaCollection('images')->singleFile();
+    }
 }

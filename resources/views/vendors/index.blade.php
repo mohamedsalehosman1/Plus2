@@ -33,6 +33,8 @@
                                 <td>
                                     @include('vendors.actions.edit')
                                     @include('vendors.actions.delete')
+                                    @include('vendors.actions.show')
+
                                 </td>
                             </tr>
                         @endforeach

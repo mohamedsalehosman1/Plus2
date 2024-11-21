@@ -16,9 +16,10 @@ return [
             'roles' => 'c,r,u,d,s',
             'admins' => 'c,r,u,d,s,b,f,re,rt',
             'vendors' => 'c,r,u,d,s,b,f,re,rt',
+            'coupons' => 'c,r,u,d,s,f',
         ],
         'vendor' => [
-
+            'coupons' => 'c,r,u,d,s,f',
         ],
     ],
 

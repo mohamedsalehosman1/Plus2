@@ -9,6 +9,6 @@ return [
     'create_new_role' => 'Create New Role',
     'roles_list' => 'Roles List',
     'name' => 'Name',
-
+    'Actions'=>'Actions',
     'create_role_button' => 'Create Role',
 ];

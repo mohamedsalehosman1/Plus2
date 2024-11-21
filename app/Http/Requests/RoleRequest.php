@@ -13,13 +13,32 @@ class RoleRequest extends FormRequest
     {
         return true;
     }
-
+    public function rules(): array
+    {
+        // dd($this);
+        if (request()->ismethod('post')) {
+            return $this->StoreRules();
+        } else {
+            return $this->UpdateRules();
+        }
+    }
     /**
      * Get the validation rules that apply to the request.
      *
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
-    public function rules(): array
+    public function StoreRules(): array
+    {
+        return [
+            'name' => 'required|string|max:255',
+            'display_name' => 'required|string|max:255',
+            'description' => 'required|string',
+            'permissions' => 'required|array',
+            'permissions.*' => 'exists:permissions,id',
+
+        ];
+    }
+    public function UpdateRules(): array
     {
         return [
             'name' => 'required|string|max:255',

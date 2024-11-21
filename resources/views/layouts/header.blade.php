@@ -227,12 +227,13 @@
                     </button>
                     <ul class="dropdown-menu dropdown-menu-end has-content" aria-labelledby="dropdownMenuButton3">
                         <li>
-                            <a href="#" class="user-item">
+                            <a href="{{ auth()->guard('admins')->check() ? route('admin.profile') : (auth()->guard('vendors')->check() ? route('vendors.profile') : '#') }}" class="user-item">
                                 <div class="icon">
                                     <i class="icon-user"></i>
                                 </div>
                                 <div class="body-title-2">Account</div>
                             </a>
+
                         </li>
                         <li>
                             <a href="#" class="user-item">

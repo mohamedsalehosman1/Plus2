@@ -22,29 +22,37 @@ class AdminRequest extends FormRequest
      */
     public function rules(): array
     {
-        // dd($this);
         if (request()->ismethod('post')) {
             return $this->StoreRules();
         } else {
             return $this->UpdateRules();
         }
     }
+
+
     public function StoreRules()
     {
         return RuleFactory::make([
-
-
             'name' => 'required|string|max:255',
-            'email' => "required|email|unique:admins",
-            'password' => 'required|string|min:8',
+            'email' => 'required|email|unique:admins',
+            'password' => 'required|string|min:8|confirmed',
+            'roles' => 'required|exists:roles,id',
+            'image' => 'required|file|mimes:jpeg,png,jpg,gif,svg|max:2048', // تحقق من الصورة
         ]);
     }
+
+
+
     public function UpdateRules()
     {
         return RuleFactory::make([
+
             'name' => 'required|string|max:255',
-            'email' => "required|email",
-            'password' => 'string|min:8|confirmed',
+            'email' => 'required|email',
+            'roles' => 'nullable|exists:roles,id',
+            'password' => 'nullable|string|min:8|confirmed',  // الكلمة الصحيحة "nullable" بدلاً من "sometimes"
+            'image' => 'nullable|file|mimes:jpeg,png,jpg,gif,svg|max:2048',
+
         ]);
     }
 }

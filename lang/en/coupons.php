@@ -1,0 +1,23 @@
+<?php
+return [
+    'Coupons' => 'Coupons',
+    'NewCoupon' => 'New Coupon',
+    'CouponList' => 'Coupon List',
+    'AddNewCoupon' => 'Add New Coupon',
+    'CouponCode' => 'Coupon Code',
+    'DiscountPercent' => 'Discount Percent',
+    'MaxDiscount' => 'Max Discount',
+    'StartDate' => 'Start Date',
+    'EndDate' => 'End Date',
+    'MaxCoupons' => 'Max Coupons Available',
+    'MaxCouponsPerUser' => 'Max Coupons Per User',
+    'Vendor' => 'Vendor',
+    'ActiveCoupon' => 'Activate Coupon',
+    'AddCoupon' => 'Add Coupon',
+    'EditCoupon' => 'Edit Coupon',
+    'Max_use_per_user' => 'Max_use_per_user',
+    'Max_use' => 'Max_use',
+    'UpdateCoupon' => 'Update Coupon',
+    'Cancel' => 'Cancel',
+    'Edit' =>'Edit',
+];

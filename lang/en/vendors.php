@@ -13,6 +13,8 @@ return [
     'create_new_vendor' => 'Create New Vendor',
     'vendor_list' => 'Vendor List',
     'view_soft_deleted_vendors' => 'View Soft Deleted Vendors',
-
+    'edit_vendor' => 'Edit Vendor',
+    'leave_blank_for_current_password' => 'Leave blank to keep current password',
+    'update_vendor' => 'Update Vendor',
     'actions' => 'Actions',
 ];

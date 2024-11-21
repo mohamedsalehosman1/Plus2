@@ -16,5 +16,8 @@
         'view_soft_deleted_vendors' => 'عرض المتاجر المحذوفه',
 
         'actions' => 'الإجراءات',
+        'edit_vendor' => 'تعديل المتجر',
+        'leave_blank_for_current_password' => 'اتركه فارغًا إذا كنت لا ترغب في تغيير كلمة المرور الحالية',
+        'update_vendor' => 'تحديث المتجر',
 
     ];
