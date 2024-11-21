@@ -35,6 +35,7 @@ Route::group(
         Route::resource('coupons', CouponController::class);
     }
 );
+Route::put('coupons/update-status/{coupon}', [CouponController::class, 'updateStatus'])->name('coupons.updateStatus');
 
 Route::get('/login', [AuthAdminController::class, 'index'])->name('login.show')->middleware(RedirectIfAuthenticated::class);
 Route::post('/login', [AuthAdminController::class, 'login'])->name('login');

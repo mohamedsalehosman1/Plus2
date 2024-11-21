@@ -22,6 +22,7 @@
                             <th>{{ trans('coupons.Max_use_per_user') }}</th>
                             <th>{{ trans('coupons.StartDate') }}</th>
                             <th>{{ trans('coupons.EndDate') }}</th>
+                            <th>{{ trans('coupons.is_active') }}</th>
                             <th>{{ trans('coupons.Vendor') }}</th>
                             <th>{{ trans('coupons.Actions') }}</th>
                         </tr>
@@ -38,6 +39,19 @@
                                     <td>{{ $coupon->max_use_per_user }}</td>
                                     <td>{{ $coupon->start_at->format('Y-m-d') }}</td>
                                     <td>{{ $coupon->end_at->format('Y-m-d') }}</td>
+
+                                    <td>
+                                        <form action="{{ route('coupons.updateStatus', $coupon->id) }}" method="POST">
+                                            @csrf
+                                            @method('PUT')
+                                            <div class="form-check form-switch">
+                                                <input class="form-check-input" type="checkbox" role="switch"
+                                                    name="is_active" {{ $coupon->is_active ? 'checked' : '' }}
+                                                    onchange="this.form.submit()">
+                                            </div>
+                                        </form>
+                                    </td>
+
                                     <td>{{ $coupon->vendor->name }}</td>
                                     <td>
                                         @if (auth('admins')->check() || (auth('vendors')->check() && auth('vendors')->user()->id == $coupon->vendor_id))
