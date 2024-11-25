@@ -1,91 +1,77 @@
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
 
 <head>
-    <title>Login 04</title>
     <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap" rel="stylesheet">
-
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-
-    <link rel="stylesheet" href="{{ asset('assets2/css/style.css') }}">
-
+    <meta name="description" content="CoreUI Bootstrap 4 Admin Template">
+    <meta name="author" content="Lukasz Holeczek">
+    <meta name="keyword" content="CoreUI Bootstrap 4 Admin Template">
+    <title>نموذج تسجيل الدخول</title>
+    <!-- Icons -->
+    <link href="{{ asset('assets2/css/font-awesome.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets2/css/simple-line-icons.css') }}" rel="stylesheet">
+    <!-- Main styles for this application -->
+    <link href="{{ asset('assets2/dest/style.css') }}" rel="stylesheet">
+    <!-- Bootstrap 4 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 
 <body>
-    <section class="ftco-section">
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-md-6 text-center mb-5">
-                    <h2 class="heading-section">Admin Login</h2>
-                </div>
-            </div>
-            <div class="row justify-content-center">
-                <div class="col-md-12 col-lg-10">
-                    <div class="wrap d-md-flex">
-                        <div class="img" style="background-image: url('{{ asset('assets2/images/bg-1.jpg') }}');">
-                        </div>
-                        <div class="login-wrap p-4 p-md-5">
-                            <div class="d-flex">
-                                <div class="w-100">
-                                    <h3 class="mb-4">Sign In</h3>
-                                </div>
-                                <div class="w-100">
-                                    <p class="social-media d-flex justify-content-end">
-                                        <a href="#"
-                                            class="social-icon d-flex align-items-center justify-content-center"><span
-                                                class="fa fa-facebook"></span></a>
-                                        <a href="#"
-                                            class="social-icon d-flex align-items-center justify-content-center"><span
-                                                class="fa fa-twitter"></span></a>
-                                    </p>
+    <section class="h-100 gradient-form" style="background-color: #eee;">
+        <div class="container py-5 h-100">
+            <div class="row d-flex justify-content-center align-items-center h-100">
+                <div class="col-xl-10">
+                    <div class="card rounded-3 text-black">
+                        <div class="row g-0">
+                            <div class="col-lg-6">
+                                <div class="card-body p-md-5 mx-md-4">
+
+                                    <div class="text-center">
+                                        <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/lotus.webp"
+                                            style="width: 185px;" alt="logo">
+                                        <h4 class="mt-1 mb-5 pb-1">We are The Admins Team</h4>
+                                    </div>
+
+                                    <!-- نموذج تسجيل الدخول -->
+                                    <form action="{{ route('login.show') }}" method="POST" class="signin-form">
+                                        @csrf
+                                        <p>Please login to your account</p>
+
+                                        <!-- حقل البريد الإلكتروني -->
+                                        <div data-mdb-input-init class="form-outline mb-4">
+                                            <input type="text" id="form2Example11" name="email"
+                                                class="form-control" placeholder="Phone number or email address"
+                                                required />
+                                            <label class="form-label" for="form2Example11">Username</label>
+                                        </div>
+
+                                        <!-- حقل كلمة المرور -->
+                                        <div data-mdb-input-init class="form-outline mb-4">
+                                            <input type="password" id="form2Example22" name="password"
+                                                class="form-control" required />
+                                            <label class="form-label" for="form2Example22">Password</label>
+                                        </div>
+
+                                        <!-- زر الدخول -->
+                                        <div class="text-center pt-1 mb-5 pb-1">
+                                            <button data-mdb-button-init data-mdb-ripple-init
+                                                class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3"
+                                                type="submit">Log in</button>
+                                        </div>
+                                        <div class="text-center">
+                                            <a class="text-muted" href="{{ route('vendors.login.show') }}">Login AS
+                                                Avendor</a>
+                                        </div>
+                                        <!-- رابط استعادة كلمة المرور -->
+                                        <div class="text-center">
+                                            <a class="text-muted" href="{{ route('password.request') }}">Forgot
+                                                password?</a>
+                                        </div>
+                                    </form>
                                 </div>
                             </div>
-                            <form action="{{ route('login.show') }}" method="POST" class="signin-form">
-                                @csrf
-                                <div class="form-group">
-                                    <label>Email</label>
-                                    <input id="email" type="email"
-                                        class="form-control @error('email') is-invalid @enderror" name="email"
-                                        value="{{ old('email') }}" required autocomplete="email" autofocus>
-
-                                    @error('email')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
-                                </div>
-                                <div class="form-group">
-                                    <label>Password</label>
-                                    <input id="password" type="password"
-                                        class="form-control @error('password') is-invalid @enderror" name="password"
-                                        required autocomplete="current-password">
-
-                                    @error('password')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
-                                </div>
-                                <div class="form-group">
-                                    <button type="submit" class="form-control btn btn-primary rounded submit px-3">Sign
-                                        In</button>
-                                </div>
-                                <div class="form-group d-md-flex">
-                                    <div class="w-50 text-left">
-                                        <label class="checkbox-wrap checkbox-primary mb-0">Remember Me
-                                            <input type="checkbox" checked>
-                                            <span class="checkmark"></span>
-                                        </label>
-                                    </div>
-                                    <div class="w-50 text-md-right">
-                                        <a href="#">Forgot Password</a>
-                                    </div>
-                                </div>
-                            </form>
-                            <p class="text-center">Not a member? <a data-toggle="tab" href="#signup">Sign Up</a></p>
                         </div>
                     </div>
                 </div>
@@ -93,11 +79,9 @@
         </div>
     </section>
 
-    <script src="{{ asset('assets2/js/jquery.min.js') }}"></script>
-    <script src="{{ asset('assets2/js/popper.js') }}"></script>
-    <script src="{{ asset('assets2/js/bootstrap.min.js') }}"></script>
-    <script src="{{ asset('assets2/js/main.js') }}"></script>
-
+    <script src="{{ asset('assets2/js/libs/jquery.min.js') }}"></script>
+    <script src="{{ asset('assets2/js/libs/tether.min.js') }}"></script>
+    <script src="{{ asset('assets2/js/libs/bootstrap.min.js') }}"></script>
 </body>
 
 </html>

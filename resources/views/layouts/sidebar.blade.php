@@ -91,7 +91,7 @@
                 @endpermission
 
                 @php
-                    $coupon_route = auth("admins")->user() ? 'coupons' : 'vendors.coupons'
+                    $coupon_route = auth("admins")->user() ? 'coupons' : 'coupons'
                 @endphp
 
                 @permission('create_coupons', 'read_coupons')

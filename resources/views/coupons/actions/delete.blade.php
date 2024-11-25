@@ -1,5 +1,5 @@
 @php
-$coupon_route = auth('admins')->user() ? 'coupons' : 'vendors.coupons';
+$coupon_route = auth('admins')->user() ? 'coupons' : 'coupons';
 @endphp
 @permission('delete_coupons')
     <form action="{{ route("$coupon_route.destroy", $coupon->id) }}" method="POST" style="display:inline;">

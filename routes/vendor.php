@@ -12,9 +12,9 @@ Route::name("vendors.")->prefix('vendor')->group(function () {
     Route::post('/logout', [AuthVendorController::class, 'logout'])->name('logout');
     Route::get('profile', [VendorController::class, 'showProfile'])->name('profile');
     Route::post('update-profile', [VendorController::class, 'updateProfile'])->name('updateProfile');
+    // Route::get('/login', [AuthVendorController::class, 'login'])->name('loginAsvendor');
 
     Route::middleware('auth:vendors')->group(function () {
-        Route::resource('coupons', CouponController::class); // مسارات إدارة الكوبونات
         Route::get('/', function () {
             return view('layouts.home');
         })->name('home');

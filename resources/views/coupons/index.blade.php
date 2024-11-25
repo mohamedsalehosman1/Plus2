@@ -4,6 +4,22 @@
     <div class="main-content">
         <div class="main-content-inner">
             <div class="tf-section mb-10">
+                <div class="flex items-center flex-wrap justify-between gap20 mb-27">
+                    <h3>{{ trans('coupons.CouponsList') }}</h3>
+                    <ul class="breadcrumbs flex items-center flex-wrap justify-start gap10">
+                        <li>
+                            <a href="{{ url('dashboard') }}">
+                                <div class="text-tiny">Coupons</div>
+                            </a>
+                        </li>
+                        <li>
+                            <i class="icon-chevron-right"></i>
+                        </li>
+                        <li>
+                            <div class="text-tiny">Coupons_List</div>
+                        </li>
+                    </ul>
+                </div
                 <h2>{{ trans('coupons.CouponsList') }}</h2>
 
                 @if (session('success'))
@@ -14,7 +30,8 @@
 
                 <table class="table table-striped">
                     <thead>
-                        <tr>
+                        <tr>                                        <th>#</th>
+
                             <th>{{ trans('coupons.CouponCode') }}</th>
                             <th>{{ trans('coupons.DiscountPercent') }}</th>
                             <th>{{ trans('coupons.MaxDiscount') }}</th>
@@ -30,8 +47,10 @@
 
                     <tbody>
                         @foreach ($coupons as $coupon)
-                            @if (auth('admins')->check() || (auth('vendors')->check() && auth('vendors')->user()->id == $coupon->vendor_id))
+                            {{-- @if (auth('admins')->check() || (auth('vendors')->check() && auth('vendors')->user()->id == $coupon->vendor_id)) --}}
                                 <tr>
+                                    <td>{{ $loop->iteration }}</td>
+
                                     <td>{{ $coupon->code }}</td>
                                     <td>{{ $coupon->discount_percent }}%</td>
                                     <td>{{ $coupon->max_discount }}</td>
@@ -39,6 +58,7 @@
                                     <td>{{ $coupon->max_use_per_user }}</td>
                                     <td>{{ $coupon->start_at->format('Y-m-d') }}</td>
                                     <td>{{ $coupon->end_at->format('Y-m-d') }}</td>
+
 
                                     <td>
                                         <form action="{{ route('coupons.updateStatus', $coupon->id) }}" method="POST">
@@ -49,24 +69,25 @@
                                                     name="is_active" {{ $coupon->is_active ? 'checked' : '' }}
                                                     onchange="this.form.submit()">
                                             </div>
+
                                         </form>
                                     </td>
 
                                     <td>{{ $coupon->vendor->name }}</td>
                                     <td>
-                                        @if (auth('admins')->check() || (auth('vendors')->check() && auth('vendors')->user()->id == $coupon->vendor_id))
+                                        {{-- @if (auth('admins')->check() || (auth('vendors')->check() && auth('vendors')->user()->id == $coupon->vendor_id)) --}}
                                             @include('coupons.actions.edit')
                                             @include('coupons.actions.delete')
-                                        @endif
+                                        {{-- @endif --}}
                                     </td>
                                 </tr>
-                            @endif
+                            {{-- @endif --}}
                         @endforeach
                     </tbody>
                 </table>
 
                 @php
-                    $coupon_route = auth('admins')->user() ? 'coupons' : 'vendors.coupons';
+                    $coupon_route = auth('admins')->user() ? 'coupons' : 'coupons';
                 @endphp
 
                 @if ($coupons->isEmpty())

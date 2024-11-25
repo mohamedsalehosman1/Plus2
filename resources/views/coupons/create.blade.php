@@ -7,7 +7,7 @@
             <div class="tf-section mb-10">
                 <h2>{{ trans('coupons.AddNewCoupon') }}</h2>
                 @php
-                    $coupon_route = auth('admins')->user() ? 'coupons' : 'vendors.coupons';
+                    $coupon_route = auth('admins')->user() ? 'coupons' : 'coupons';
                 @endphp
                 <form action="{{ route("$coupon_route.store") }}" method="POST">
                     @csrf
@@ -81,8 +81,8 @@
                             <label for="vendor_id">{{ trans('coupons.Vendor') }}:</label>
 
                             <select name="vendor_id" id="vendor_id" class="form-control" required>
-                                @foreach ($vendors as $vendor)
-                                    <option value="{{ $vendor->id }}">{{ $vendor->name }}</option>
+                                @foreach ($vendors as $id => $name)
+                                    <option value="{{ $id }}">{{ $name }}</option>
                                 @endforeach
                             </select>
                     @endif
