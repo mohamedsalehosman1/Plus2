@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Collection;
 
 class CouponRepository implements CrudsInterface , SoftdeleteInterface
 {
+<<<<<<< HEAD
     public function index($vendor_id = null)
     {
         if ($vendor_id) {
@@ -13,6 +14,17 @@ class CouponRepository implements CrudsInterface , SoftdeleteInterface
         }
 
         return Coupon::all();
+=======
+    public function index($search = null, $vendorId = null)
+    {
+        return Coupon::when($search, function ($query) use ($search) {
+            return $query->where('code', 'like', '%' . $search . '%');
+        })
+        ->when($vendorId, function ($query) use ($vendorId) {
+            return $query->where('vendor_id', $vendorId);
+        })
+        ->paginate(request('perPage'));
+>>>>>>> 9e2279537b289d0f00b42cf0fbacd6ada7f13c9b
     }
 
     public function store($data)

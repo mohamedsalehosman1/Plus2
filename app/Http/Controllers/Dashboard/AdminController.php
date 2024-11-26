@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Dashboard;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AdminRequest;
 use App\Http\Requests\ProfileRequest;
+use App\Http\Resources\Tests;
 use App\Models\Admin;
 use App\Models\Role;
 use App\Repositories\AdminRepository;
@@ -40,6 +41,8 @@ class AdminController extends Controller implements HasMiddleware
     public function index()
     {
         $admins = $this->repository->index();
+        $data = Tests::collection($admins);
+        return $data;
         return view('admins.index', get_defined_vars());
     }
 

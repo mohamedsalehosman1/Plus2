@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -10,17 +11,17 @@ use Laratrust\Contracts\LaratrustUser;
 use Laratrust\Traits\HasRolesAndPermissions;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
+use Illuminate\Notifications\Notifiable;
+use Illuminate\Contracts\Auth\CanResetPassword;
+use App\Notifications\ResetPasswordNotification;
 
-class Admin extends Authenticatable implements LaratrustUser, HasMedia
+class Admin extends Authenticatable implements LaratrustUser, HasMedia, CanResetPassword
 {
-    use HasFactory, SoftDeletes, HasRolesAndPermissions, InteractsWithMedia;
+    use HasFactory, SoftDeletes, HasRolesAndPermissions, InteractsWithMedia, Notifiable;
 
-    // Table name (optional, if different from pluralized model name)
     protected $table = 'admins';
 
-    // protected $guarded = 'admins';
 
-    // Mass assignable attributes
     protected $fillable = [
         'name',
         'email',
@@ -33,12 +34,13 @@ class Admin extends Authenticatable implements LaratrustUser, HasMedia
         'phone_verified_at',
         'deleted_at'
     ];
-
-    // Timestamps for created_at and updated_at are enabled by default, but we specify them explicitly if needed
+    protected $hidden = [
+        'password',
+        'remember_token',
+    ];
     const CREATED_AT = 'created_at';
     const UPDATED_AT = 'updated_at';
 
-    // Define the attributes that should be cast to native types
     protected $casts = [
         'password' => 'hashed',
         'email_verified_at' => 'datetime',
@@ -49,5 +51,10 @@ class Admin extends Authenticatable implements LaratrustUser, HasMedia
     public function registerMediaCollections(): void
     {
         $this->addMediaCollection('images')->singleFile();
+    }
+    public function sendPasswordResetNotification($token)
+    {
+        $url = url('/reset-password/'.$token);
+        // $this->notify(new ResetPasswordNotification($url));
     }
 }

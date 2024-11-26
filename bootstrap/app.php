@@ -14,7 +14,7 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware) {
         //
         $middleware->append(RedirectIfAuthenticated::class);
-
+            $middleware->statefulApi();
         $middleware->alias([
             /**** OTHER MIDDLEWARE ALIASES ****/
             'localize'                => \Mcamara\LaravelLocalization\Middleware\LaravelLocalizationRoutes::class,

@@ -66,13 +66,22 @@
                     <div class="form-group">
                         <label for="vendor_id">{{ trans('coupons.Vendor') }}</label>
                         <select id="vendor_id" name="vendor_id" class="form-control" disabled>
+<<<<<<< HEAD
                             @if (isset($vendors))
+=======
+                            <!-- @if (isset($vendors)) -->
+                             @each($vendors)
+>>>>>>> 9e2279537b289d0f00b42cf0fbacd6ada7f13c9b
                                 @foreach ($vendors as $id => $name)
                                     <option value="{{ $id }}" {{ $id == $coupon->vendor_id ? 'selected' : '' }}>
                                         {{ $name }}
                                     </option>
                                 @endforeach
+<<<<<<< HEAD
                              @endif
+=======
+                             <!-- @endif -->
+>>>>>>> 9e2279537b289d0f00b42cf0fbacd6ada7f13c9b
 
                         </select>
                     </div>

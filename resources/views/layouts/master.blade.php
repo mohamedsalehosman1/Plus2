@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US" lang="en-US">
 
 <head>
-    <title>SurfsideMedia</title>
+    <title></title>
     <meta charset="utf-8">
     <meta name="author" content="themesflat.com">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -13,6 +13,7 @@
     <div id="wrapper">
         <div id="page">
             <div class="layout-wrap">
+<<<<<<< HEAD
                 @include('layouts.head')
 
                 {{-- Uncomment the following lines if you want to include a preloader
@@ -22,6 +23,10 @@
                     </div>
                 </div>
                 --}}
+=======
+                @include('layouts.header')
+
+>>>>>>> 9e2279537b289d0f00b42cf0fbacd6ada7f13c9b
 
                 @include('layouts.sidebar')
 

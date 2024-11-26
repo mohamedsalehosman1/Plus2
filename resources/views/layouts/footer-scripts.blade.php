@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <script src="{{ asset('assets/js/bootstrap.min.js')}}"></script>
 <script src="{{ asset('assets/js/jquery.min.js')}}"></script>
 <script src="{{ asset('assets/js/bootstrap-select.min.js')}}"></script>
@@ -5,6 +6,18 @@
 <script src="{{ asset('assets/js/apexcharts/apexcharts.js')}}"></script>
 <script src="{{ asset('assets/js/main.js')}}"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+=======
+<script src="{{ asset('assets/js/jquery.min.js') }}"></script>
+<script src="{{ asset('assets/js/bootstrap.min.js') }}"></script>
+<script src="{{ asset('assets/js/bootstrap-select.min.js') }}"></script>
+<script src="{{ asset('assets/js/sweetalert.min.js') }}"></script>
+<script src="{{ asset('assets/js/apexcharts/apexcharts.js') }}"></script>
+<script src="{{ asset('assets/js/main.js') }}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/js/dropify.min.js"
+    integrity="sha512-8QFTrG0oeOiyWo/VM9Y8kgxdlCryqhIxVeRpWSezdRRAvarxVtwLnGroJgnVW9/XBRduxO/z1GblzPrMQoeuew=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+>>>>>>> 9e2279537b289d0f00b42cf0fbacd6ada7f13c9b
 <script>
 
     (function ($) {
@@ -103,4 +116,8 @@
 
         jQuery(window).on("resize", function () { });
     })(jQuery);
+<<<<<<< HEAD
+=======
+    $('.dropify').dropify();
+>>>>>>> 9e2279537b289d0f00b42cf0fbacd6ada7f13c9b
 </script>

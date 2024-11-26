@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CouponRequest;
@@ -16,22 +15,35 @@ class CouponController extends Controller
     {
         $this->repository = $repository;
     }
+<<<<<<< HEAD
 
     public function index(Request $request)
     {
         $vendor_id = $request->get('vendor_id', auth('vendors')->check() ? auth('vendors')->user()->id : null);
 
         $coupons = $this->repository->index($vendor_id );
+=======
+    public function index()
+    {
+
+        $coupons = $this->repository->index();
+>>>>>>> 9e2279537b289d0f00b42cf0fbacd6ada7f13c9b
 
         return view('coupons.index', get_defined_vars());
     }
+
 
     public function create()
     {
         if (auth("admins")->check()) {
             $vendors = Vendor::get(['id', 'name'])->pluck('name', 'id')->toArray();
+<<<<<<< HEAD
         } else {
             $vendors = [];
+=======
+        } else{
+            $vendors=[];
+>>>>>>> 9e2279537b289d0f00b42cf0fbacd6ada7f13c9b
         }
 
         return view('coupons.create', compact('vendors'));
@@ -39,12 +51,23 @@ class CouponController extends Controller
 
     public function store(CouponRequest $request)
     {
+<<<<<<< HEAD
         // dd($request);
+=======
+>>>>>>> 9e2279537b289d0f00b42cf0fbacd6ada7f13c9b
         $this->repository->store($request->validated());
 
         return redirect()->route("coupons.index")->with('success', __('Coupon Added successfully.'));
     }
 
+<<<<<<< HEAD
+=======
+    public function show(Coupon $coupon, Vendor $vendors)
+    {
+        // Logic for showing coupon details
+    }
+
+>>>>>>> 9e2279537b289d0f00b42cf0fbacd6ada7f13c9b
     public function edit(Coupon $coupon)
     {
         if (auth("admins")->check()) {

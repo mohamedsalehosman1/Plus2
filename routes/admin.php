@@ -56,7 +56,18 @@ Route::group(
 
 );
 
+<<<<<<< HEAD
 
+=======
+Route::group(['prefix' => 'password', 'as' => 'password.'], function () {
+
+    Route::get('/forgot', [ForgetPasswordController::class, 'showLinkRequestForm'])->name('request');
+    Route::post('/forgot', [ForgetPasswordController::class, 'sendResetLinkEmail'])->name('email');
+    Route::post('/reset', [ForgetPasswordController::class, 'showResetForm'])->name('reset');
+    Route::post('/reset', [ForgetPasswordController::class, 'reset'])->name('update');
+
+});
+>>>>>>> 9e2279537b289d0f00b42cf0fbacd6ada7f13c9b
 
 
 
