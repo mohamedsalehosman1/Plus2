@@ -6,32 +6,35 @@
     <meta charset="utf-8">
     <meta name="author" content="themesflat.com">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    @include('layouts.head');
-
+    @include('layouts.header')
 </head>
 
 <body class="body">
     <div id="wrapper">
-        <div id="page" class="">
+        <div id="page">
             <div class="layout-wrap">
+                @include('layouts.head')
 
-                <!-- <div id="preload" class="preload-container">
-    <div class="preloading">
-        <span></span>
-    </div>
-</div>-->
+                {{-- Uncomment the following lines if you want to include a preloader
+                <div id="preload" class="preload-container">
+                    <div class="preloading">
+                        <span></span>
+                    </div>
+                </div>
+                --}}
+
                 @include('layouts.sidebar')
 
-
+                <!-- Main Content Section -->
                 <div class="section-content-right">
-                    @include('layouts.header')
                     @yield('content')
                 </div>
             </div>
         </div>
     </div>
-    @include('layouts.footer-scripts');
+    @include('layouts.footer')
 
+    @include('layouts.footer-scripts')
 </body>
 
 </html>

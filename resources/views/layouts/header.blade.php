@@ -3,8 +3,8 @@
         <div class="header-left">
             <a href="index-2.html">
                 <img class="" id="logo_header_mobile" alt="" src="{{ asset('assets/images/logo/logo.png') }}"
-                    data-light="images/logo/logo.png" data-dark="images/logo/logo.png" data-width="154px"
-                    data-height="52px" data-retina="images/logo/logo.png">
+                    data-light="images/logo/logo.png" data-dark="{{ asset('assets/images/logo/logo.png') }}" data-width="154px"
+                    data-height="52px" data-retina="{{ asset('assets/images/logo/logo.png') }}">
             </a>
             <div class="button-show-hide">
                 <i class="icon-menu-left"></i>

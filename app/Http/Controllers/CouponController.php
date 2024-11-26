@@ -17,77 +17,60 @@ class CouponController extends Controller
         $this->repository = $repository;
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        $coupons = Coupon::all();
+        $vendor_id = $request->get('vendor_id', auth('vendors')->check() ? auth('vendors')->user()->id : null);
+
+        $coupons = $this->repository->index($vendor_id );
+
         return view('coupons.index', get_defined_vars());
     }
 
     public function create()
     {
-        $vendors = Vendor::all();
-        return view('coupons.create', get_defined_vars());
+        if (auth("admins")->check()) {
+            $vendors = Vendor::get(['id', 'name'])->pluck('name', 'id')->toArray();
+        } else {
+            $vendors = [];
+        }
+
+        return view('coupons.create', compact('vendors'));
     }
 
     public function store(CouponRequest $request)
     {
-        if ($request->is_active) {
-            Coupon::where('vendor_id', $request->vendor_id)
-                ->update(['is_active' => false]);
-        }
+        // dd($request);
+        $this->repository->store($request->validated());
 
-        $vendorId = auth('vendors')->check() ? auth('vendors')->user()->id : $request->vendor_id;
-
-        $coupon_route = auth('admins')->user() ? 'coupons' : 'vendors.coupons';
-
-        $coupon = $this->repository->store($request->validated());
-        return redirect()->route(route: "$coupon_route.index")->with('success', __('Coupon Added successfully.'));
+        return redirect()->route("coupons.index")->with('success', __('Coupon Added successfully.'));
     }
-
-    public function show(Coupon $coupon) {}
 
     public function edit(Coupon $coupon)
     {
-        $vendors = Vendor::all();
+        if (auth("admins")->check()) {
+            $vendors = Vendor::get(['id', 'name'])->pluck('name', 'id')->toArray();
+        }
+
         return view('coupons.edit', get_defined_vars());
     }
 
     public function update(CouponRequest $request, Coupon $coupon)
     {
-        if ($request->is_active) {
-            Coupon::where('vendor_id', $coupon->vendor_id)
-                ->where('id', '!=', $coupon->id)
-                ->update(['is_active' => false]);
-        }
+        $this->repository->update($request->validated(), $coupon);
 
-        $coupon_route = auth('admins')->user() ? 'coupons' : 'vendors.coupons';
-
-        $coupon = $this->repository->update($request->validated(), $coupon);
-        return redirect()->route("$coupon_route.index")->with('success', __('Coupon Updated successfully.'));
+        return redirect()->route("coupons.index")->with('success', __('Coupon Updated successfully.'));
     }
 
     public function destroy(Coupon $coupon)
     {
-        $coupon_route = auth('admins')->user() ? 'coupons' : 'vendors.coupons';
-
         $this->repository->destroy($coupon);
-        return redirect()->route("$coupon_route.index")->with('success', __('Coupon Deleted successfully.'));
+
+        return redirect()->route("coupons.index")->with('success', __('Coupon Deleted successfully.'));
     }
 
-    public function updateStatus($couponId)
+    public function updateStatus(Coupon $coupon)
     {
-        $coupon = Coupon::findOrFail($couponId);
-
-        if (!$coupon->is_active) {
-            Coupon::where('vendor_id', $coupon->vendor_id)
-                ->update(['is_active' => false]);
-
-            $coupon->is_active = true;
-            $coupon->save();
-        } else {
-            $coupon->is_active = false;
-            $coupon->save();
-        }
+        $this->repository->updateStatus($coupon);
 
         return redirect()->route('coupons.index')->with('success', 'Coupon status updated successfully.');
     }

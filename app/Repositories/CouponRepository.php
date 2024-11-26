@@ -1,21 +1,25 @@
 <?php
-
 namespace App\Repositories;
 
 use App\Models\Coupon;
 use Illuminate\Database\Eloquent\Collection;
 
-class CouponRepository implements CrudsInterface , Softdeleteinterface
-
+class CouponRepository implements CrudsInterface , SoftdeleteInterface
 {
-
-    public function index()
+    public function index($vendor_id = null)
     {
-        return Coupon::paginate(request("perPage"));
+        if ($vendor_id) {
+            return Coupon::where('vendor_id', $vendor_id)->get();
+        }
+
+        return Coupon::all();
     }
 
     public function store($data)
     {
+        Coupon::where('vendor_id', $data['vendor_id'])
+            ->update(['is_active' => false]);
+
         return Coupon::create($data);
     }
 
@@ -33,21 +37,32 @@ class CouponRepository implements CrudsInterface , Softdeleteinterface
     {
         return $model->forceDelete();
     }
+
     public function trash()
     {
-        return Coupon::onlyTrashed()->paginate(request(key: "perPage"));
+        return Coupon::onlyTrashed()->paginate(request('perPage'));
     }
 
     public function find($id, $withTrashed = false)
     {
-        return Coupon::when(fn($q) => $q->withTrashed())->findOrFail($id);
+        return Coupon::when($withTrashed, function ($q) {
+            return $q->withTrashed();
+        })->findOrFail($id);
     }
 
     public function restore($model)
     {
-        return $model->restore($model);
+        return $model->restore();
     }
 
+    public function updateStatus(Coupon $coupon)
+    {
+        if (!$coupon->is_active) {
+            Coupon::where('vendor_id', $coupon->vendor_id)
+                ->update(['is_active' => false]);
+        }
 
-
+        $coupon->is_active = !$coupon->is_active;
+        return $coupon->save();
+    }
 }

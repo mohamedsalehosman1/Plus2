@@ -46,14 +46,12 @@ class CouponRequest extends FormRequest
     public function UpdateRules(): array
     {
         return [
-            'code' => 'nullable|unique:coupons,code|max:255',
             'discount_percent' => 'required|numeric|min:0|max:100',
             'max_discount' => 'required|numeric|min:0',
-            'start_at' => 'nullable|date|after_or_equal:today',
             'end_at' => 'required|date|after:start_at',
             'max_use' => 'required|integer|min:1',
             'max_use_per_user' => 'required|integer|min:1|lt:max_use',
-            'vendor_id' => 'nullable|exists:vendors,id',
+
         ];
     }
 }
