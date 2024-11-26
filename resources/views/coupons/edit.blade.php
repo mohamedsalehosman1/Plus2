@@ -66,13 +66,14 @@
                     <div class="form-group">
                         <label for="vendor_id">{{ trans('coupons.Vendor') }}</label>
                         <select id="vendor_id" name="vendor_id" class="form-control" disabled>
-                            @if (isset($vendors))
+                            <!-- @if (isset($vendors)) -->
+                             @each($vendors)
                                 @foreach ($vendors as $id => $name)
                                     <option value="{{ $id }}" {{ $id == $coupon->vendor_id ? 'selected' : '' }}>
                                         {{ $name }}
                                     </option>
                                 @endforeach
-                             @endif
+                             <!-- @endif -->
 
                         </select>
                     </div>

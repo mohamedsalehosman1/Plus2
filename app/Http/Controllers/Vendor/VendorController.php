@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Vendor;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ProfileRequest;
 use App\Http\Requests\VendorRequest;
+use App\Http\Resources\Tests;
 use App\Models\Role;
 use App\Models\Vendor;
 use App\Repositories\VendorRepository;
@@ -40,6 +41,8 @@ class VendorController extends Controller implements HasMiddleware
     public function index()
     {
         $vendors = $this->repository->index();
+        $data =Tests::collection($vendors);
+        return $data;
         return view('vendors.index', get_defined_vars());
     }
 

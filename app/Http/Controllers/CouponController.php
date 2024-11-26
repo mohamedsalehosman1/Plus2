@@ -53,7 +53,7 @@ class CouponController extends Controller
             $vendors = Vendor::get(['id', 'name'])->pluck('name', 'id')->toArray();
         }
 
-        return view('coupons.edit', compact('coupon', 'vendors'));
+        return view('coupons.edit', get_defined_vars());
     }
 
     public function update(CouponRequest $request, Coupon $coupon)
