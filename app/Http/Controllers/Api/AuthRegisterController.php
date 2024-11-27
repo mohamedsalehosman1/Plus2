@@ -15,7 +15,9 @@ class AuthRegisterController extends Controller
     {
         $newuser = $request->validated();
         $user = User::create($newuser);
-        $sucess['token'] = $user->createToken('user', ['app:all'])->plainTextToken;
-        return response()->json('sucess', 200);
+        $success['name'] = $user->name;
+        $success['token'] = $user->createToken('user', ['app:all'])->plainTextToken;
+
+        return response()->json($success, 200);
     }
-}
+};
