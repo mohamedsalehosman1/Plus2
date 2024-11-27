@@ -13,7 +13,6 @@
     <div id="wrapper">
         <div id="page">
             <div class="layout-wrap">
-<<<<<<< HEAD
                 @include('layouts.head')
 
                 {{-- Uncomment the following lines if you want to include a preloader
@@ -23,10 +22,6 @@
                     </div>
                 </div>
                 --}}
-=======
-                @include('layouts.header')
-
->>>>>>> 9e2279537b289d0f00b42cf0fbacd6ada7f13c9b
 
                 @include('layouts.sidebar')
 

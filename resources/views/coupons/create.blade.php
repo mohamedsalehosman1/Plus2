@@ -1,4 +1,3 @@
-<!-- resources/views/coupons/create.blade.php -->
 @extends('layouts.master')
 
 @section('content')
@@ -74,18 +73,20 @@
                         @enderror
                     </div>
 
-                    @if (auth('vendors')->check())
-                        <input type="hidden" name="vendor_id" value="{{ auth('vendors')->user()->id }}">
-                    @else
-                        <div class="form-group">
-                            <label for="vendor_id">{{ trans('coupons.Vendor') }}:</label>
+                    @if (isset($vendors))
 
-                            <select name="vendor_id" id="vendor_id" class="form-control" required>
-                                @foreach ($vendors as $id => $name)
-                                    <option value="{{ $id }}">{{ $name }}</option>
-                                @endforeach
-                            </select>
-                    @endif
+                    @if (auth('vendors')->check())
+                    <input type="hidden" name="vendor_id" value="{{ auth('vendors')->user()->id }}">
+                    <div class="form-group">
+                        <label for="vendor_id">{{ trans('coupons.Vendor') }}:</label>
+
+                        <select name="vendor_id" id="vendor_id" class="form-control" required>
+                            @foreach ($vendors as $id => $name)
+                            <option value="{{ $id }}">{{ $name }}</option>
+                            @endforeach
+                        </select>
+                        @endif
+                        @endif
 
                     @error('vendor_id')
                         <div class="alert alert-danger">{{ $message }}</div>

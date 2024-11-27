@@ -64,19 +64,11 @@
                                             <a class="text-muted" href="{{ route('vendors.login.show') }}">Login AS
                                                 Avendor</a>
                                         </div>
-<<<<<<< HEAD
                                         {{-- <!-- رابط استعادة كلمة المرور -->
                                         <div class="text-center">
                                             <a class="text-muted" href="{{ route('password.request') }}">Forgot
                                                 password?</a>
                                         </div> --}}
-=======
-                                        <!-- رابط استعادة كلمة المرور -->
-                                        <div class="text-center">
-                                            <a class="text-muted" href="{{ route('password.request') }}">Forgot
-                                                password?</a>
-                                        </div>
->>>>>>> 9e2279537b289d0f00b42cf0fbacd6ada7f13c9b
                                     </form>
                                 </div>
                             </div>

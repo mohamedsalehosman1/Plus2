@@ -2,29 +2,33 @@
 
 namespace App\Notifications;
 
+use Ichtrojan\Otp\Models\Otp as ModelsOtp;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class LoginNotification extends Notification
+class EmailVerificationNotification extends Notification
 {
     use Queueable;
+
     public $message;
     public $fromEmail;
-    public $mailer;
+    public $mailer; //if  i user many emails
     public $subject;
-
+    private $otp;
     /**
      * Create a new notification instance.
      */
     public function __construct()
     {
         //
-        $this->message = "You are loged in";
-        $this->subject = "New Loggin in";
+
+        $this->message = "use the below code for verification process";
+        $this->subject = "Verification Needed ";
         $this->fromEmail = "hello@example.com";
         $this->mailer = "smtp";
+        $this->otp = new Otp;
     }
 
     /**
@@ -40,13 +44,15 @@ class LoginNotification extends Notification
     /**
      * Get the mail representation of the notification.
      */
-    public function toMail(object $notifiable)
+    public function toMail($notifiable): MailMessage
     {
+        $otp = $this->otp->generateOtp($notifiable->email, 6, 60);
         return (new MailMessage)
             ->mailer('smtp')
             ->subject($this->subject)
             ->greeting('Hello' . $notifiable->name)
-            ->line($this->message);
+            ->line($this->message)
+            ->line('code: ' . $otp->token);
     }
 
     /**

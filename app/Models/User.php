@@ -47,4 +47,8 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+    public function verification()
+    {
+        return $this->morphOne(Verification::class, 'verifiable');
+    }
 }

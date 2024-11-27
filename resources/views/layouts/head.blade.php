@@ -9,12 +9,7 @@
 <link rel="apple-touch-icon-precomposed" href="{{ asset('assets/images/favicon.ico')}}">
 <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/sweetalert.min.css')}}">
 <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/custom.css')}}">
-<<<<<<< HEAD
 <!-- تضمين CSS ل Bootstrap -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-=======
-
-
->>>>>>> 9e2279537b289d0f00b42cf0fbacd6ada7f13c9b
 
 <!-- تضمين JavaScript ل Bootstrap -->

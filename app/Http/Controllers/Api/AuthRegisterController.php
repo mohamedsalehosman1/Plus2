@@ -2,22 +2,40 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use App\Models\User;
-use Hash;
+use App\Models\Verification;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
+use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\RegisterRequest;
 
 class AuthRegisterController extends Controller
 {
-
     public function register(RegisterRequest $request)
     {
-        $newuser = $request->validated();
-        $user = User::create($newuser);
-        $success['name'] = $user->name;
-        $success['token'] = $user->createToken('user', ['app:all'])->plainTextToken;
+        $checkuser = User::where('email', $request->email)->first();
+        if ($checkuser) {
+            return response()->json([
+                'message' => 'Email already Exists'
+            ], 400);
+        }
 
-        return response()->json($success, 200);
+        $user = User::create($request->validated());
+
+        $Code = Str::random(length: 4);
+
+        $user->verification()->create([
+            'code' => $Code
+        ]);
+
+
+        // Mail::to($user->email)->send(new VerifyEmail($user, $Code));
+
+        return response()->json([
+            'message' => 'تم التسجيل بنجاح! تحقق من بريدك الإلكتروني.',
+            'code' => $Code
+
+        ], 201);
     }
-};
+}
