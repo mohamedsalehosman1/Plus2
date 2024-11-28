@@ -7,28 +7,23 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\VerfiyRequest;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
-
-
+use App\Traits\ApiResponseTrait;
 
 class VerificationController extends Controller
 {
+    use ApiResponseTrait;
+
     public function verifyEmail(VerfiyRequest $request)
     {
-        $verification = Verification::where('email', $request->email)
-            ->first();
+        $verification = Verification::where('email', $request->email)->first();
 
         if (!$verification) {
-            return response()->json([
-                'message' => 'Email not found. Please check your email address.',
-            ], 404);
+            return $this->errorResponse('Email not found. Please check your email address.', null, 404);
         }
 
         if ($verification->code !== $request->code) {
-            return response()->json([
-                'message' => 'Invalid verification code. Please check and try again.',
-            ], 400);
+            return $this->errorResponse('Invalid verification code. Please check and try again.', null, 400);
         }
 
         $user = $verification->verifiable;
@@ -37,14 +32,10 @@ class VerificationController extends Controller
 
         $verification->delete();
 
-
-        return response()->json([
-            'message' => 'Email successfully verified.',
-        ]);
+        return $this->successResponse(null, 'Email successfully verified.');
     }
 
-
-    public function resendcode(Request $request)
+    public function resendCode(Request $request)
     {
         $user = User::where('email', $request->email)->first();
 
@@ -52,20 +43,14 @@ class VerificationController extends Controller
             $user->verification()->delete();
             $code = Str::random(4);
 
-
             $user->verification()->create([
                 'code' => $code,
                 'email' => $request->email,
             ]);
 
-            return response()->json([
-                'message' => 'تم إرسال كود التحقق الجديد إلى بريدك الإلكتروني.',
-                'code' => $code,
-            ]);
+            return $this->successResponse(['code' => $code], 'تم إرسال كود التحقق الجديد إلى بريدك الإلكتروني.');
         }
 
-        return response()->json([
-            'message' => 'المستخدم غير موجود بالبريد الإلكتروني المدخل.',
-        ], 404);
+        return $this->errorResponse('المستخدم غير موجود بالبريد الإلكتروني المدخل.', null, 404);
     }
 }
