@@ -23,18 +23,17 @@ class AuthRegisterController extends Controller
 
         $user = User::create($request->validated());
 
-        $Code = Str::random(length: 4);
+        $code = Str::random(length: 4);
 
         $user->verification()->create([
-            'code' => $Code
+            'code' => $code,
+            'email' => $request->email
         ]);
-
-
         // Mail::to($user->email)->send(new VerifyEmail($user, $Code));
 
         return response()->json([
             'message' => 'تم التسجيل بنجاح! تحقق من بريدك الإلكتروني.',
-            'code' => $Code
+            'code' => $code
 
         ], 201);
     }
