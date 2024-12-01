@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ResetPasswordRequest;
+use App\Http\Requests\ResetTokenRequest;
 use App\Models\ResetPassword;
+use App\Models\ResetToken;
 use App\Models\User;
 use App\Models\Verification;
 use App\Traits\ApiResponseTrait;
@@ -31,29 +33,17 @@ class ResetPasswordController extends Controller
 
         return $this->successResponse(['code' => $resetCode]);
     }
-    public function resettoken(ResetPasswordRequest $request)
+    public function resettoken(ResetTokenRequest $request)
     {
-        $verification = Verification::where('email', $request->email)->first();
 
-        if (!$verification) {
-            return $this->errorResponse('Email not found. Please check your email address.', null, 404);
-        }
-
-        if ($verification->code !== $request->code) {
-            return $this->errorResponse('Invalid verification code. Please check and try again.', null, 400);
-        }
         $user = User::where('email', $request->email)->first();
 
-        $resetCode = Str::random(4);
 
 
-        $user->reset_password_code()->delete();
-        $user->reset_password_code()->create([
-            'email' => $request->email,
-            'code' => $resetCode,
-        ]);
+        $user->reset_password_token()->delete();
+        $data['token'] = $user->createToken(request()->userAgent())->plainTextToken;
 
 
-        return $this->successResponse(['code' => $resetCode]);
+        return $this->successResponse($data);
     }
 }

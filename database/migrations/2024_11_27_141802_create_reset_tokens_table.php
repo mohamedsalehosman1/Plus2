@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('reset_password_tokens', function (Blueprint $table) {
+        Schema::create('reset_tokens', function (Blueprint $table) {
             $table->id();
             $table->morphs('resetable');
             $table->string('reset_value');
