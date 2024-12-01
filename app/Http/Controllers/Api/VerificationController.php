@@ -37,20 +37,16 @@ class VerificationController extends Controller
 
     public function resendCode(Request $request)
     {
-        $user = User::where('email', $request->email)->first();
+        $user = User::where('email', $request->email)->firstOrFail();
+        $user->verification()->delete();
 
-        if ($user) {
-            $user->verification()->delete();
-            $code = Str::random(4);
+        $code = Str::random(4);
 
-            $user->verification()->create([
-                'code' => $code,
-                'email' => $request->email,
-            ]);
+        $user->verification()->create([
+            'code' => $code,
+            'email' => $request->email,
+        ]);
 
-            return $this->successResponse(['code' => $code], 'تم إرسال كود التحقق الجديد إلى بريدك الإلكتروني.');
-        }
-
-        return $this->errorResponse('المستخدم غير موجود بالبريد الإلكتروني المدخل.', null, 404);
+        return $this->successResponse(['code' => $code], 'تم إرسال كود التحقق الجديد إلى بريدك الإلكتروني.');
     }
 }
