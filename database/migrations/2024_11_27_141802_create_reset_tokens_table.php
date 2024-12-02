@@ -16,9 +16,9 @@ return new class extends Migration
         Schema::create('reset_tokens', function (Blueprint $table) {
             $table->id();
             $table->morphs('resetable');
-            $table->string('reset_value');
-            $table->string(column: 'token');
-            $table->timestamp('created_at');
+            $table->string('email');
+            $table->string('token');
+            $table->timestamps();
         });
     }
 

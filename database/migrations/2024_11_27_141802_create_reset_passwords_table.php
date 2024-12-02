@@ -15,11 +15,10 @@ return new class extends Migration
     {
         Schema::create('reset_passwords', function (Blueprint $table) {
             $table->morphs('resetable');
-            $table->string('reset_type');
-            $table->string('reset_value');
+            $table->string('email');
 
             $table->string('code');
-            $table->timestamp('created_at');
+            $table->timestamps();
         });
     }
 

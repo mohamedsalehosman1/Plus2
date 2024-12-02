@@ -19,11 +19,11 @@ class VerificationController extends Controller
         $verification = Verification::where('email', $request->email)->first();
 
         if (!$verification) {
-            return $this->errorResponse('Email not found. Please check your email address.', null, 404);
+            return $this->errorResponse('Email not found. Please check your email address.');
         }
 
         if ($verification->code !== $request->code) {
-            return $this->errorResponse('Invalid verification code. Please check and try again.', null, 400);
+            return $this->errorResponse('Invalid verification code. Please check and try again.');
         }
 
         $user = $verification->verifiable;
@@ -32,7 +32,7 @@ class VerificationController extends Controller
 
         $verification->delete();
 
-        return $this->successResponse(null, 'Email successfully verified.');
+        return $this->successResponse( 'Email successfully verified.');
     }
 
     public function resendCode(Request $request)

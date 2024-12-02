@@ -18,7 +18,7 @@ class AuthRegisterController extends Controller
     {
         $checkuser = User::where('email', $request->email)->first();
         if ($checkuser) {
-            return $this->errorResponse('Email already Exists', null, 400);
+            return $this->errorResponse('Email already Exists');
         }
 
         $user = User::create($request->validated());

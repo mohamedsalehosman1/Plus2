@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Api;
 
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -22,7 +22,8 @@ class ResetTokenRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'email' => 'required|email|exists:users,email',
-            'code' => 'required|string',];
+            'email' => 'required|email|exists:reset_passwords,email',
+            'code' => 'required|string|exists:reset_passwords,code',
+        ];
      }
 }
