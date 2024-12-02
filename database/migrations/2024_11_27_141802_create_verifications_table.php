@@ -12,12 +12,12 @@ class CreateVerificationsTable extends Migration
             $table->id();
             $table->morphs('verifiable');
             $table->string('code');
-            $table->string('email')->nullable();  // السماح بالقيم الفارغة (NULL)
+            $table->string('email')->unique();
+            $table->boolean('is_verified')->default(false);
 
             $table->timestamps();
         });
     }
-
 
     public function down()
     {

@@ -6,55 +6,47 @@ use App\Models\Verification;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Hash;
+use App\Http\Requests\Api\VerfiyRequest;
 use Illuminate\Support\Str;
+use App\Traits\ApiResponseTrait;
 
 class VerificationController extends Controller
 {
-    public function verifyEmail(Request $request)
+    use ApiResponseTrait;
+
+    public function verifyEmail(VerfiyRequest $request)
     {
-        $request->validate([
-            'email' => 'required|email',
-            'code' => 'required|string',
-        ]);
-
-        $verification = Verification::where('code', $request->code)
-            ->where('email', $request->email)
-            ->first();
-
-        if ($verification && !$verification->is_verified) {
-            $verification->is_verified = true;
-            $verification->save();
-
-
-
-            return response()->json([
-                'message' => 'تم التحقق من بريدك الإلكتروني بنجاح!',
-            ]);
-        }
+        $verification = Verification::where('email', $request->email)->first();
 
         if (!$verification) {
-            $newCode = Str::random(6);
-
-            $user = User::where('email', $request->email)->first();
-            if ($user) {
-                $newVerification = Verification::create([
-                    'code' => $newCode,
-
-                ]);
-
-                return response()->json([
-                    'message' => 'الكود غير صالح أو انتهت صلاحيته. تم إرسال كود جديد إلى بريدك الإلكتروني.',
-                ]);
-            }
-
-            return response()->json([
-                'message' => 'البريد الإلكتروني غير مسجل.',
-            ], 400);
+            return $this->errorResponse('Email not found. Please check your email address.');
         }
 
-        return response()->json([
-            'message' => 'تم التحقق من بريدك الإلكتروني بالفعل.',
+        if ($verification->code !== $request->code) {
+            return $this->errorResponse('Invalid verification code. Please check and try again.');
+        }
+
+        $user = $verification->verifiable;
+        $user->email_verified_at = now();
+        $user->save();
+
+        $verification->delete();
+
+        return $this->successResponse( 'Email successfully verified.');
+    }
+
+    public function resendCode(Request $request)
+    {
+        $user = User::where('email', $request->email)->firstOrFail();
+        $user->verification()->delete();
+
+        $code = Str::random(4);
+
+        $user->verification()->create([
+            'code' => $code,
+            'email' => $request->email,
         ]);
+
+        return $this->successResponse(['code' => $code], 'تم إرسال كود التحقق الجديد إلى بريدك الإلكتروني.');
     }
 }

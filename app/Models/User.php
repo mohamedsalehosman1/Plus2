@@ -51,4 +51,12 @@ class User extends Authenticatable
     {
         return $this->morphOne(Verification::class, 'verifiable');
     }
+    public function reset_password_code()
+    {
+        return $this->morphOne(ResetPassword::class, 'resetable');
+    }
+    public function reset_password_token()
+    {
+        return $this->morphOne(ResetToken::class, 'resetable');
+    }
 }

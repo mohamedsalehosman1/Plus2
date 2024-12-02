@@ -8,23 +8,26 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use App\Notifications\LoginNotification;
+use App\Traits\ApiResponseTrait;
+use Illuminate\Support\Str;
 
 class AuthLoginController extends Controller
 {
-
-    public function login(loginRequest $request)
+    use ApiResponseTrait;
+    public function login(LoginRequest $request)
     {
         $credentials = $request->validated();
         if (auth()->attempt($credentials)) {
             $user = Auth::user();
-            $user->tokens()->delete();
-            $success['token'] = $user->createToken(request()->userAgent())->plainTextToken;
-            $success['name'] = $user->name;
-            $success['success'] = true;
-            $user->notify(new LoginNotification);
-            return response()->json($success, 200);
+
+            if (!$user->hasVerifiedEmail()) {
+                return $this->errorResponse('Please verify your email address.'  );
+            }
+
+            $token = $user->createToken(request()->userAgent())->plainTextToken;
+            return $this->successResponse($token, 'Login successful.');
         } else {
-            return response()->json(['error' => ' Error at email or password'], 401);
+            return $this->errorResponse('Error with email or password.');
         }
     }
 }
