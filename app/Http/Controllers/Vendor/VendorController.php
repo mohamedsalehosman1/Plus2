@@ -41,8 +41,6 @@ class VendorController extends Controller implements HasMiddleware
     public function index()
     {
         $vendors = $this->repository->index();
-        $data =Tests::collection($vendors);
-        return $data;
         return view('vendors.index', get_defined_vars());
     }
 
@@ -55,7 +53,8 @@ class VendorController extends Controller implements HasMiddleware
     public function store(VendorRequest $request)
     {
 
-        $vendor = $this->repository->store($request->validated());        $vendor->addMediaFromRequest('image')->toMediaCollection('images');
+        $vendor = $this->repository->store($request->validated());
+           $vendor->addMediaFromRequest('image')->toMediaCollection('images');
 
         $role = Role::where('name', 'vendor')->first();
         if ($role) {

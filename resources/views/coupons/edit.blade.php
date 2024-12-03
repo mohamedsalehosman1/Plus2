@@ -15,8 +15,7 @@
                     </div>
                 @endif
 
-
-                <form action="{{ route("coupons.update", $coupon->id) }}" method="POST">
+                <form action="{{ route('coupons.update', $coupon->id) }}" method="POST">
                     @csrf
                     @method('PUT')
 
@@ -37,17 +36,18 @@
                         <input type="number" id="max_discount" name="max_discount" class="form-control"
                             value="{{ old('max_discount', $coupon->max_discount) }}" required>
                     </div>
+
                     <div class="form-group">
-                        <label for="max_discount">{{ trans('coupons.Max_use') }}</label>
+                        <label for="max_use">{{ trans('coupons.Max_use') }}</label>
                         <input type="number" id="max_use" name="max_use" class="form-control"
                             value="{{ old('max_use', $coupon->max_use) }}" required>
                     </div>
+
                     <div class="form-group">
-                        <label for="max_discount">{{ trans('coupons.Max_use_per_user') }}</label>
+                        <label for="max_use_per_user">{{ trans('coupons.Max_use_per_user') }}</label>
                         <input type="number" id="max_use_per_user" name="max_use_per_user" class="form-control"
                             value="{{ old('max_use_per_user', $coupon->max_use_per_user) }}" required>
                     </div>
-
 
                     <div class="form-group">
                         <label for="start_at">{{ trans('coupons.StartDate') }}</label>
@@ -61,26 +61,24 @@
                             value="{{ old('end_at', $coupon->end_at->format('Y-m-d')) }}" required>
                     </div>
 
-
-
-                    <div class="form-group">
-                        <label for="vendor_id">{{ trans('coupons.Vendor') }}</label>
-                        <select id="vendor_id" name="vendor_id" class="form-control" disabled>
-                             @if (isset($vendors))
-                             {{-- @each($vendors) --}}
-                                @foreach ($vendors as $id => $name)
-                                    <option value="{{ $id }}" {{ $id == $coupon->vendor_id ? 'selected' : '' }}>
-                                        {{ $name }}
-                                    </option>
-                                @endforeach
-                             @endif
-
-                        </select>
-                    </div>
+                    <!-- إخفاء حقل "Vendor" إذا كان المستخدم هو vendor -->
+                    @if (!auth('vendors')->check()) <!-- تحقق إذا كان المستخدم ليس vendor -->
+                        <div class="form-group">
+                            <label for="vendor_id">{{ trans('coupons.Vendor') }}</label>
+                            <select id="vendor_id" name="vendor_id" class="form-control">
+                                    @foreach ($vendors as $id => $name)
+                                        <option value="{{ $id }}" {{ $id == $coupon->vendor_id ? 'selected' : '' }}>
+                                            {{ $name }}
+                                        </option>
+                                    @endforeach
+                            </select>
+                        </div>
+                    @else
+                        <input type="hidden" name="vendor_id" value="{{ auth('vendors')->user()->id }}">
+                    @endif
 
                     <button type="submit" class="btn btn-primary">{{ trans('coupons.UpdateCoupon') }}</button>
-                    <a href="{{ route("coupons.index") }}"
-                        class="btn btn-secondary">{{ trans('coupons.Cancel') }}</a>
+                    <a href="{{ route('coupons.index') }}" class="btn btn-secondary">{{ trans('coupons.Cancel') }}</a>
                 </form>
             </div>
         </div>

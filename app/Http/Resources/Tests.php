@@ -10,7 +10,7 @@ class Tests extends JsonResource
     /**
      * Transform the resource collection into an array.
      *
-     * 
+     *
      * "id": 1,
             "code": "123",
             "discount_percent": "10.00",
@@ -28,13 +28,9 @@ class Tests extends JsonResource
     public function toArray(Request $request): array
     {
         // return parent::toArray($request);
-        return [   
-            'code'=>$this->code,
-        'vendor' =>
-        [$this->vendor->id,
-        ],
+        return [
         ];
     }
 
-    
+
 }

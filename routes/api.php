@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\AuthLoginController;
 use App\Http\Controllers\Api\AuthRegisterController;
+use App\Http\Controllers\Api\ChangePasswordController;
 use App\Http\Controllers\Api\ResetPasswordController;
 use App\Http\Controllers\Api\UpdateEmailController;
 use App\Http\Controllers\Api\VerificationController;
@@ -22,5 +23,6 @@ Route::post('resend_code', [VerificationController::class, 'resendcode']);
 Route::post('request_reset_code', [ResetPasswordController::class, 'requestResetCode']);
 Route::post('reset_token', [ResetPasswordController::class, 'resetToken']);
 Route::post('update_password', [ResetPasswordController::class, 'updatePassword']);
-Route::post('send_email', [UpdateEmailController::class, 'sendEmail'])->middleware('auth:sanctum');
+Route::post('send_email', [UpdateEmailController::class, 'sendemail'])->middleware('auth:sanctum');
 Route::post('update_email', [UpdateEmailController::class, 'updateemail'])->middleware('auth:sanctum');
+Route::post('change_password', [ChangePasswordController::class, 'changepassword'])->middleware('auth:sanctum');

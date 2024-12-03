@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdController;
 use App\Http\Controllers\CouponController;
 use App\Http\Controllers\Dashboard\AdminController;
 use App\Http\Controllers\Dashboard\AuthAdminController;
@@ -51,6 +52,10 @@ Route::group(
     function () {
         Route::put('coupons/update-status/{coupon}', [CouponController::class, 'updateStatus'])->name('coupons.updateStatus');
         Route::resource('coupons', CouponController::class);
+        Route::put('ads/update-status/{ad}', [AdController::class, 'updateStatus'])->name('ads.updateStatus');
+
+        Route::resource('ads', AdController::class);
+
     }
 
 

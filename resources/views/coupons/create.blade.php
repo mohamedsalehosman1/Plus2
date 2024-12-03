@@ -5,10 +5,8 @@
         <div class="main-content-inner">
             <div class="tf-section mb-10">
                 <h2>{{ trans('coupons.AddNewCoupon') }}</h2>
-                @php
-                    $coupon_route = auth('admins')->user() ? 'coupons' : 'coupons';
-                @endphp
-                <form action="{{ route("$coupon_route.store") }}" method="POST">
+
+                <form action="{{ route('coupons.store') }}" method="POST">
                     @csrf
 
                     <div class="form-group">
@@ -73,32 +71,26 @@
                         @enderror
                     </div>
 
-                    @if (isset($vendors))
+                    @if (!auth('vendors')->check()) 
+                        <div class="form-group">
+                            <label for="vendor_id">{{ trans('coupons.Vendor') }}:</label>
+                            <select name="vendor_id" id="vendor_id" class="form-control" required>
+                                @foreach ($vendors as $id => $name)
+                                    <option value="{{ $id }}">{{ $name }}</option>
+                                @endforeach
+                            </select>
+                            @error('vendor_id')
+                                <div class="alert alert-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
+                    @else
+                        <!-- إذا كان المستخدم هو vendor، يتم تمرير القيمة المخفية -->
+                        <input type="hidden" name="vendor_id" value="{{ auth('vendors')->user()->id }}">
+                    @endif
 
-                    @if (auth('vendors')->check())
-                    <input type="hidden" name="vendor_id" value="{{ auth('vendors')->user()->id }}">
-                    <div class="form-group">
-                        <label for="vendor_id">{{ trans('coupons.Vendor') }}:</label>
-
-                        <select name="vendor_id" id="vendor_id" class="form-control" required>
-                            @foreach ($vendors as $id => $name)
-                            <option value="{{ $id }}">{{ $name }}</option>
-                            @endforeach
-                        </select>
-                        @endif
-                        @endif
-
-                    @error('vendor_id')
-                        <div class="alert alert-danger">{{ $message }}</div>
-                    @enderror
+                    <button type="submit" class="btn btn-primary">{{ trans('coupons.AddCoupon') }}</button>
+                </form>
             </div>
-
-
-
-
-            <button type="submit" class="btn btn-primary">{{ trans('coupons.AddCoupon') }}</button>
-            </form>
         </div>
-    </div>
     </div>
 @endsection

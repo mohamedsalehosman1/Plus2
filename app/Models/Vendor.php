@@ -51,4 +51,8 @@ class Vendor extends Authenticatable implements LaratrustUser, HasMedia
     {
         return $this->hasMany(Coupon::class);
     }
+    public function ads()
+    {
+        return $this->hasMany(Ad::class);
+    }
 }
