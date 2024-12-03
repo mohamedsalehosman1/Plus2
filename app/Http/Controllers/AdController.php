@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use App\Http\Requests\AdRequest;
@@ -19,40 +20,36 @@ class AdController extends Controller
     public function index(Request $request)
     {
         $vendor_id = $request->get('vendor_id', auth('vendors')->check() ? auth('vendors')->user()->id : null);
-
         $ads = $this->repository->index();
-
         return view('Ads.index', compact('ads'));
     }
 
     public function create()
     {
         $vendors = auth("admins")->check() ? Vendor::pluck('name', 'id')->toArray() : [];
-
         return view('Ads.create', compact('vendors'));
     }
 
     public function store(AdRequest $request)
     {
         $data = $request->validated();
+        $ad = $this->repository->store($data);
 
-        // إذا كان المستخدم "بائع"، سيتم إضافة "vendor_id" تلقائيًا
-        if (auth('vendors')->check()) {
-            $data['vendor_id'] = auth('vendors')->user()->id;
+        if ($request->hasFile('image')) {
+            $ad->addMediaFromRequest('image')->toMediaCollection('images');
         }
 
-        // تخزين الإعلان باستخدام الريبو
-        $this->repository->store($data);
+        if (auth('vendors')->check()) {
+            $ad->vendor_id = auth('vendors')->user()->id;
+            $ad->save();
+        }
 
         return redirect()->route('ads.index')->with('success', __('Ad Added successfully.'));
     }
 
     public function edit(Ad $Ad)
     {
-        // إذا كان المستخدم "مشرف"، يتم جلب قائمة البائعين
         $vendors = auth("admins")->check() ? Vendor::pluck('name', 'id')->toArray() : [];
-
-        // عرض الصفحة الخاصة بتعديل الإعلان مع قائمة البائعين
         return view('Ads.edit', compact('Ad', 'vendors'));
     }
 
@@ -60,31 +57,29 @@ class AdController extends Controller
     {
         $data = $request->validated();
 
-        // إذا كان المستخدم "بائع"، تأكد من أن "vendor_id" لا يتم تغييره من قبل البائع نفسه
+        if ($request->hasFile('image')) {
+            $Ad->clearMediaCollection('images');
+            $Ad->addMediaFromRequest('image')->toMediaCollection('images');
+        }
+
         if (auth('vendors')->check()) {
             $data['vendor_id'] = auth('vendors')->user()->id;
         }
 
-        // تحديث الإعلان باستخدام الريبو
         $this->repository->update($data, $Ad);
-
         return redirect()->route("Ads.index")->with('success', __('Ad Updated successfully.'));
     }
 
     public function destroy(Ad $Ad)
     {
-        // حذف الإعلان باستخدام الريبو
+        $Ad->clearMediaCollection('images');
         $this->repository->destroy($Ad);
-
-        return redirect()->route("Ads.index")->with('success', __('Ad Deleted successfully.'));
+        return redirect()->route("ads.index")->with('success', __('Ad Deleted successfully.'));
     }
 
     public function updateStatus(Ad $Ad)
     {
-        // تغيير حالة الإعلان (تنشيط/تعطيل) باستخدام الريبو
         $this->repository->updateStatus($Ad);
-
-        return redirect()->route('Ads.index')->with('success', 'Ad status updated successfully.');
+        return redirect()->route('ads.index')->with('success', 'Ad status updated successfully.');
     }
 }
-

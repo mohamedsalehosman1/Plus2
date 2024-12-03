@@ -65,14 +65,14 @@ class AdRepository implements CrudsInterface
     public function updateStatus(Ad $Ad)
     {
         // تحديث حالة الإعلان بين التنشيط والتعطيل
-        if (!$Ad->is_active) {
+        if (!$Ad->status) {
             // إذا كان الإعلان غير نشط، يتم تعطيل جميع الإعلانات الأخرى للبائع نفسه
             Ad::where('vendor_id', $Ad->vendor_id)
-                ->update(['is_active' => false]);
+                ->update(['status' => false]);
         }
 
         // تغيير حالة الإعلان الحالية بين التنشيط والتعطيل
-        $Ad->is_active = !$Ad->is_active;
+        $Ad->status = !$Ad->status;
         return $Ad->save();
     }
 }

@@ -38,6 +38,8 @@ class AdRequest extends FormRequest
             'name' => 'required|string|max:255', // التحقق من وجود الاسم، وأنه نصي، ولا يتجاوز 255 حرفًا
             'description' => 'required|string|max:1000', // التحقق من وجود الوصف، وأنه نصي، ولا يتجاوز 1000 حرف
             'vendor_id' => 'required|exists:vendors,id', // التحقق من وجود "vendor_id" وربطه بالبائعين في قاعدة البيانات
+            'image' => 'nullable|file|mimes:jpeg,png,jpg,gif,svg|max:2048',
+
         ];
     }
 
@@ -50,6 +52,8 @@ class AdRequest extends FormRequest
             'name' => 'sometimes|required|string|max:255', // إذا تم إرسال الاسم، يجب التحقق منه
             'description' => 'sometimes|required|string|max:1000', // إذا تم إرسال الوصف، يجب التحقق منه
             'vendor_id' => 'sometimes|required|exists:vendors,id', // إذا تم إرسال "vendor_id" يجب التحقق من وجوده في جدول البائعين
+            'image' => 'nullable|file|mimes:jpeg,png,jpg,|max:2048',
+
         ];
     }
 }
