@@ -5,7 +5,6 @@
         <div class="main-content-inner">
             <div class="tf-section mb-10">
                 <div class="flex items-center flex-wrap justify-between gap20 mb-27">
-                    <h3>{{ trans('ads.AdsList') }}</h3>
                     <ul class="breadcrumbs flex items-center flex-wrap justify-start gap10">
                         <li>
                             <a href="{{ url('dashboard') }}">
@@ -59,8 +58,8 @@
                                     </form>
                                 </td>
                                 <td>
-                                    @if($ad->image)
-                                        <img src="{{ asset('storage/' . $ad->image) }}" alt="Ad Image" width="50" height="50">
+                                    @if($ad->hasMedia('images'))
+                                        <img src="{{ $ad->getFirstMediaUrl('images') }}" alt="Ad Image" width="50" height="50">
                                     @else
                                         {{ trans('ads.NoImage') }}
                                     @endif

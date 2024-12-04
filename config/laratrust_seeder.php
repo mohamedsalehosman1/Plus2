@@ -17,10 +17,14 @@ return [
             'admins' => 'c,r,u,d,s,b,f,re,rt',
             'vendors' => 'c,r,u,d,s,b,f,re,rt',
             'coupons' => 'c,r,u,d,s,f',
+            'ads'=> 'c,r,u,d,s',
         ],
         'vendor' => [
             'coupons' => 'c,r,u,d,s,f',
+            'ads'=> 'c,r,u,d,s',
+
         ],
+
     ],
 
     'permissions_map' => [

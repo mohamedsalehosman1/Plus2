@@ -71,7 +71,7 @@
                         @enderror
                     </div>
 
-                    @if (!auth('vendors')->check()) 
+                    @if (!auth('vendors')->check())
                         <div class="form-group">
                             <label for="vendor_id">{{ trans('coupons.Vendor') }}:</label>
                             <select name="vendor_id" id="vendor_id" class="form-control" required>
@@ -83,8 +83,8 @@
                                 <div class="alert alert-danger">{{ $message }}</div>
                             @enderror
                         </div>
-                    @else
-                        <!-- إذا كان المستخدم هو vendor، يتم تمرير القيمة المخفية -->
+
+                        @else
                         <input type="hidden" name="vendor_id" value="{{ auth('vendors')->user()->id }}">
                     @endif
 

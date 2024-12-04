@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Repositories;
 
 use App\Models\Ad;
@@ -9,23 +10,14 @@ class AdRepository implements CrudsInterface
 {
     public function index($vendor_id = null)
     {
-        // إذا تم توفير "vendor_id"، سيتم جلب الإعلانات المرتبطة بذلك البائع فقط
-        if ($vendor_id) {
-            return Ad::where('vendor_id', $vendor_id)->get();
-        }
+            return Ad::when(auth('vendors')->user(),function($q){
+                $q->where('vendor_id', auth('vendors')->user()->id);
+            })->get();
 
-        // إذا لم يتم توفير "vendor_id"، سيتم جلب جميع الإعلانات
-        return Ad::all();
     }
 
     public function store($data)
     {
-        // قبل إنشاء إعلان جديد، إذا كان البائع قد قام بإضافة إعلان سابق، يتم تعطيل حالة الإعلانات الأخرى
-        if (isset($data['vendor_id'])) {
-            Ad::where('vendor_id', $data['vendor_id'])
-                ->update(['status' => false]);
-        }
-
         // إنشاء الإعلان الجديد باستخدام البيانات المدخلة
         return Ad::create($data);
     }
@@ -76,3 +68,4 @@ class AdRepository implements CrudsInterface
         return $Ad->save();
     }
 }
+

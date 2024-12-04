@@ -41,8 +41,7 @@ class AdminController extends Controller implements HasMiddleware
     public function index()
     {
         $admins = $this->repository->index();
-        $data = Tests::collection($admins);
-        return $data;
+     
         return view('admins.index', get_defined_vars());
     }
 

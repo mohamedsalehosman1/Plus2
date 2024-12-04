@@ -7,8 +7,9 @@ use App\Models\Ad;
 use App\Models\Vendor;
 use App\Repositories\AdRepository;
 use Illuminate\Http\Request;
-
-class AdController extends Controller
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
+class AdController extends Controller implements HasMiddleware
 {
     private $repository;
 
@@ -16,26 +17,33 @@ class AdController extends Controller
     {
         $this->repository = $repository;
     }
-
+    public static function middleware()
+    {
+        return [
+            new Middleware("permission:read_ads", only: ['index']),
+            new Middleware("permission:create_ads", only: ['create', 'store']),
+            new Middleware("permission:show_ads", only: ['show']),
+            new Middleware("permission:update_ads", only: ['update', 'edit']),
+            new Middleware("permission:delete_ads", only: ['destroy']),
+        ];
+    }
     public function index(Request $request)
     {
-        $vendor_id = $request->get('vendor_id', auth('vendors')->check() ? auth('vendors')->user()->id : null);
         $ads = $this->repository->index();
-        return view('Ads.index', compact('ads'));
+        return view('ads.index', get_defined_vars());
     }
 
     public function create()
     {
         $vendors = auth("admins")->check() ? Vendor::pluck('name', 'id')->toArray() : [];
-        return view('Ads.create', compact('vendors'));
+        return view('ads.create', get_defined_vars());
     }
 
     public function store(AdRequest $request)
     {
         $data = $request->validated();
         $ad = $this->repository->store($data);
-
-        if ($request->hasFile('image')) {
+ if ($request->hasFile('image')) {
             $ad->addMediaFromRequest('image')->toMediaCollection('images');
         }
 
@@ -44,42 +52,43 @@ class AdController extends Controller
             $ad->save();
         }
 
+
         return redirect()->route('ads.index')->with('success', __('Ad Added successfully.'));
     }
 
-    public function edit(Ad $Ad)
+    public function edit(Ad $ad)
     {
         $vendors = auth("admins")->check() ? Vendor::pluck('name', 'id')->toArray() : [];
-        return view('Ads.edit', compact('Ad', 'vendors'));
+        return view('ads.edit', get_defined_vars());
     }
 
-    public function update(AdRequest $request, Ad $Ad)
+    public function update(AdRequest $request, Ad $ad)
     {
         $data = $request->validated();
 
         if ($request->hasFile('image')) {
-            $Ad->clearMediaCollection('images');
-            $Ad->addMediaFromRequest('image')->toMediaCollection('images');
+            $ad->clearMediaCollection('images');
+            $ad->addMediaFromRequest('image')->toMediaCollection('images');
         }
 
         if (auth('vendors')->check()) {
             $data['vendor_id'] = auth('vendors')->user()->id;
         }
 
-        $this->repository->update($data, $Ad);
-        return redirect()->route("Ads.index")->with('success', __('Ad Updated successfully.'));
+        $this->repository->update($data, $ad);
+        return redirect()->route("ads.index")->with('success', __('Ad Updated successfully.'));
     }
 
-    public function destroy(Ad $Ad)
+    public function destroy(Ad $ad)
     {
-        $Ad->clearMediaCollection('images');
-        $this->repository->destroy($Ad);
+        $ad->clearMediaCollection('images');
+        $this->repository->destroy($ad);
         return redirect()->route("ads.index")->with('success', __('Ad Deleted successfully.'));
     }
 
-    public function updateStatus(Ad $Ad)
+    public function updateStatus(Ad $ad)
     {
-        $this->repository->updateStatus($Ad);
+        $this->repository->updateStatus($ad);
         return redirect()->route('ads.index')->with('success', 'Ad status updated successfully.');
     }
 }

@@ -92,50 +92,56 @@
 
 
                 @permission('create_coupons', 'read_coupons')
-                <li class="menu-item has-children">
-                    <a href="javascript:void(0);" class="menu-item-button">
-                        <div class="icon"><i class="icon-layers"></i></div>
-                        <div class="text">{{ trans('coupons.Coupons') }}</div>
-                    </a>
-                    <ul class="sub-menu">
-                        @permission('create_coupons')
-                            <li class="sub-menu-item">
-                                <a href='{{ route('coupons.create') }}' class="">
-                                    <div class="text">{{ trans('coupons.NewCoupon') }}</div>
-                                </a>
-                            </li>
-                        @endpermission
-                        @permission('read_coupons')
-                            <li class="sub-menu-item">
-                                <a href='{{ route("coupons.index") }}' class="">
-                                    <div class="text">{{ trans('coupons.CouponList') }}</div>
-                                </a>
-                            </li>
-                        @endpermission
-                    </ul>
-                </li>
-            @endpermission
-            <li class="menu-item has-children">
-                <a href="javascript:void(0);" class="menu-item-button">
-                    <div class="icon"><i class="icon-layers"></i></div>
-                    <div class="text">Ads</div>
-                </a>
-                <ul class="sub-menu">
+                    <li class="menu-item has-children">
+                        <a href="javascript:void(0);" class="menu-item-button">
+                            <div class="icon"><i class="icon-layers"></i></div>
+                            <div class="text">{{ trans('coupons.Coupons') }}</div>
+                        </a>
+                        <ul class="sub-menu">
+                            @permission('create_coupons')
+                                <li class="sub-menu-item">
+                                    <a href='{{ route('coupons.create') }}' class="">
+                                        <div class="text">{{ trans('coupons.NewCoupon') }}</div>
+                                    </a>
+                                </li>
+                            @endpermission
+                            @permission('read_coupons')
+                                <li class="sub-menu-item">
+                                    <a href='{{ route('coupons.index') }}' class="">
+                                        <div class="text">{{ trans('coupons.CouponList') }}</div>
+                                    </a>
+                                </li>
+                            @endpermission
+                        </ul>
+                    </li>
+                @endpermission
+                @permission('create_ads', 'read_ads')
 
-                        <li class="sub-menu-item">
-                            <a href='{{ route('ads.create') }}' class="">
-                                <div class="text">Add Ads</div>
-                            </a>
-                        </li>
+                    <li class="menu-item has-children">
+                        <a href="javascript:void(0);" class="menu-item-button">
+                            <div class="icon"><i class="icon-layers"></i></div>
+                            <div class="text">Ads</div>
+                        </a>
+                        <ul class="sub-menu">
+                           @permission('create_ads')
+                                <li class="sub-menu-item">
+                                    <a href='{{ route('ads.create') }}' class="">
+                                        <div class="text">Add Ads</div>
+                                    </a>
+                                </li>
+                            @endpermission
 
-                        <li class="sub-menu-item">
-                            <a href='{{ route('ads.index') }}' class="">
-                                <div class="text">Ads</div>
-                            </a>
-                        </li>
+                            @permission('read_ads')
+                                <li class="sub-menu-item">
+                                    <a href='{{ route('ads.index') }}' class="">
+                                        <div class="text">Ads</div>
+                                    </a>
+                                </li>
+                            @endpermission
 
-                </ul>
-            </li>
+                        </ul>
+                    </li>
+                @endpermission
 
             </ul>
         </div>

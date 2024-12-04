@@ -15,27 +15,19 @@
                     </div>
                 @endif
 
-                <form action="{{ route("ads.update", $Ad->id) }}" method="POST">
+                <form action="{{ route("ads.update", $ad->id) }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
 
                     <div class="form-group">
                         <label for="title">{{ trans('ads.AdTitle') }}</label>
-                        <input type="text" id="title" name="title" class="form-control"
-                            value="{{ old('title', $Ad->title) }}" required>
+                        <input type="name" id="name" name="name" class="form-control"
+                            value="{{ old('title', $ad->name) }}">
                     </div>
 
                     <div class="form-group">
                         <label for="description">{{ trans('ads.Description') }}</label>
-                        <textarea id="description" name="description" class="form-control" required>{{ old('description', $Ad->description) }}</textarea>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="ad_image">{{ trans('ads.AdImage') }}</label>
-                        <input type="file" id="ad_image" name="ad_image" class="form-control">
-                        @if ($Ad->ad_image)
-                            <img src="{{ asset('storage/' . $Ad->ad_image) }}" alt="Ad Image" class="mt-2" width="100">
-                        @endif
+                        <textarea id="description" name="description" class="form-control" required>{{ old('description', $ad->description) }}</textarea>
                     </div>
 
 
@@ -45,10 +37,10 @@
                     <div class="form-group">
                         <label for="status">{{ trans('ads.Status') }}</label>
                         <select id="status" name="status" class="form-control" required>
-                            <option value="active" {{ $Ad->status == 'active' ? 'selected' : '' }}>
+                            <option value="active" {{ $ad->status == 'active' ? 'selected' : '' }}>
                                 {{ trans('ads.Active') }}
                             </option>
-                            <option value="inactive" {{ $Ad->status == 'inactive' ? 'selected' : '' }}>
+                            <option value="inactive" {{ $ad->status == 'inactive' ? 'selected' : '' }}>
                                 {{ trans('ads.Inactive') }}
                             </option>
                         </select>
@@ -58,11 +50,16 @@
                         <label for="vendor_id">{{ trans('ads.Vendor') }}</label>
                         <select id="vendor_id" name="vendor_id" class="form-control" required>
                             @foreach ($vendors as $id => $name)
-                                <option value="{{ $id }}" {{ $id == $Ad->vendor_id ? 'selected' : '' }}>
+                                <option value="{{ $id }}" {{ $id == $ad->vendor_id ? 'selected' : '' }}>
                                     {{ $name }}
                                 </option>
                             @endforeach
                         </select>
+                    </div>
+ <div class="dropify-wrapper">
+                        <label for="image">{{ trans('ads.AdImage') }}</label>
+                        <input type="file" name="image" id="image" class=" dropify"
+                        accept="image/*" data-default-file="{{ $ad->getFirstMediaUrl('images')}}">
                     </div>
 
                     <button type="submit" class="btn btn-primary">{{ trans('ads.UpdateAd') }}</button>
