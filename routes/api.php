@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\AuthLoginController;
 use App\Http\Controllers\Api\AuthRegisterController;
 use App\Http\Controllers\Api\ChangePasswordController;
 use App\Http\Controllers\Api\ResetPasswordController;
+use App\Http\Controllers\Api\ServiceController;
 use App\Http\Controllers\Api\UpdateEmailController;
 use App\Http\Controllers\Api\VerificationController;
 use Illuminate\Http\Request;
@@ -26,3 +27,4 @@ Route::post('send_email', [UpdateEmailController::class, 'sendemail'])->middlewa
 Route::post('update_email', [UpdateEmailController::class, 'updateemail'])->middleware('auth:sanctum');
 Route::post('change_password', [ChangePasswordController::class, 'changepassword'])->middleware('auth:sanctum');
 Route::apiResource('ads', AdController::class)->only('index','show');
+Route::apiResource('services', ServiceController::class);

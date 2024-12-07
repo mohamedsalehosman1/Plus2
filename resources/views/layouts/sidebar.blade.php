@@ -143,6 +143,27 @@
                     </li>
                 @endpermission
 
+                <li class="menu-item has-children">
+                    <a href="javascript:void(0);" class="menu-item-button">
+                        <div class="icon"><i class="icon-layers"></i></div>
+                        <div class="text">{{ trans('services.Services') }}</div>
+                    </a>
+                    <ul class="sub-menu">
+                            <li class="sub-menu-item">
+                                <a href='{{ route('services.create') }}' class="">
+                                    <div class="text">{{ trans('services.Add_Services') }}</div>
+                                </a>
+                            </li>
+
+                            <li class="sub-menu-item">
+                                <a href='{{ route('services.index') }}' class="">
+                                    <div class="text">{{ trans('services.Services_List') }}</div>
+                                </a>
+                            </li>
+
+                    </ul>
+                </li>
+
             </ul>
         </div>
     </div>

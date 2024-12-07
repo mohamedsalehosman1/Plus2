@@ -6,6 +6,7 @@ use App\Http\Controllers\Dashboard\AdminController;
 use App\Http\Controllers\Dashboard\AuthAdminController;
 use App\Http\Controllers\Dashboard\ForgetPasswordController;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\Vendor\VendorController;
 use App\Http\Middleware\RedirectIfAuthenticated;
 use Illuminate\Support\Facades\Route;
@@ -55,6 +56,7 @@ Route::group(
         Route::put('ads/update-status/{Ad}', [AdController::class, 'updateStatus'])->name('ads.updateStatus');
 
         Route::resource('ads', AdController::class);
+        Route::resource('services', ServiceController::class);
 
     }
 
