@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use App\Models\Role;
 use App\Models\Vendor;
 use Illuminate\Database\Eloquent\Collection;
 
@@ -24,11 +25,23 @@ class VendorRepository implements CrudsInterface, BlockInterface, Softdeleteinte
 
     public function store($data)
     {
-        return Vendor::create($data);
+        $model = Vendor::create($data);
+
+        $role = Role::where('name', 'vendor')->first();
+
+        if ($role) {
+            $model->roles()->syncWithoutDetaching([$role->id]);
+        }
+
+        $model->addMediaFromRequest($data['image'])->toMediaCollection('images');
+
+        return $model;
     }
 
     public function update($data, $model)
     {
+
+        
         return $model->update($data);
     }
 

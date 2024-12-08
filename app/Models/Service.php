@@ -11,16 +11,12 @@ use Spatie\MediaLibrary\InteractsWithMedia;
 
 class Service extends Model implements TranslatableContract, HasMedia
 {
-    use HasFactory, InteractsWithMedia;
-    use Translatable;
+    use HasFactory, InteractsWithMedia ,Translatable;
 
     protected $table = 'services';
-    protected $primarykey = 'id';
-
-    protected $fillable = ['name:ar', 'name:en',  'parent_id'];
-
-    public $translatedAttributes = ['name'];
-    protected $guarded = [];
+    public $translatedAttributes  = ['name'];
+    protected $fillable = ['parent_id'];
+    protected $with=['translations'];
 
 
     public function parent()
@@ -32,7 +28,7 @@ class Service extends Model implements TranslatableContract, HasMedia
     {
         return $this->hasMany(Service::class, 'parent_id');
     }
-    
+
 
 
 

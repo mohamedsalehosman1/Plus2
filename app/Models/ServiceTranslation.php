@@ -8,12 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class ServiceTranslation extends Model
 {
     use HasFactory;
+    protected $fillable = [ 'name'];
     public $timestamps = false;
-
-    protected $fillable = ['service_id', 'locale', 'name'];
-    public function translations()
-{
-    return $this->hasMany(ServiceTranslation::class);
-}
-
 }

@@ -32,7 +32,8 @@ class Vendor extends Authenticatable implements LaratrustUser, HasMedia
         'last_login_at',
         'email_verified_at',
         'phone_verified_at',
-        'deleted_at'
+        'deleted_at',
+        'service_id',
     ];
 
     // Timestamps for created_at and updated_at are enabled by default, but we specify them explicitly if needed

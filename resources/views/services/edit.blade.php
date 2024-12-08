@@ -42,12 +42,12 @@
 
                     <div class="form-group">
                         <label for="name_en">{{ trans('services.Name_English') }}</label>
-                        <input type="text" id="name_en" name="name_en" class="form-control" value="{{ ($name_en) }}" >
+                        <input type="text" id="name_en" name="name:en" class="form-control" value="{{ $service->translate('en')->name }}" >
                     </div>
 
                     <div class="form-group">
                         <label for="name_ar">{{ trans('services.Name_Arabic') }}</label>
-                        <input type="text" id="name_ar" name="name_ar" class="form-control" value="{{  $name_ar }}" >
+                        <input type="text" id="name_ar" name="name:ar" class="form-control" value="{{  $service->translate('ar')->name }}" >
                     </div>
 
                     <div class="form-group">

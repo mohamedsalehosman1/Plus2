@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use Astrotomic\Translatable\Validation\RuleFactory;
 use Illuminate\Foundation\Http\FormRequest;
 
-class VendorRequest extends FormRequest
+class   VendorRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -37,7 +37,7 @@ class VendorRequest extends FormRequest
             'email' => "required|email|unique:admins",
             'password' => 'required|string|min:8|confirmed',
             'image' => 'nullable|file|mimes:jpeg,png,jpg,gif,svg|max:2048',
-
+            'service_id' => 'nullable|exists:services,id',
         ]);
     }
     public function UpdateRules()
@@ -47,6 +47,7 @@ class VendorRequest extends FormRequest
             'email' => "required|email",
             'password' => 'nullable|string|min:8|confirmed',
             'image' => 'nullable|file|mimes:jpeg,png,jpg,|max:2048',
+            'service_id' => 'nullable|exists:services,id',
 
         ]);
     }

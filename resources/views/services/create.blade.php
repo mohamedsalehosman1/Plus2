@@ -19,17 +19,17 @@
                 <form action="{{ route('services.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div>
-                        <label for="name_en">اسم الخدمة بالإنجليزية</label>
-                        <input type="text" name="name_en" value="{{ old('name_en') }}">
-                        @error('name_en')
+                        <label for="name:en">اسم الخدمة بالإنجليزية</label>
+                        <input type="text" name="name:en">
+                        @error('name:en')
                             <div class="alert alert-danger">{{ $message }}</div>
                         @enderror
                     </div>
 
                     <div>
-                        <label for="name_ar">اسم الخدمة بالعربية</label>
-                        <input type="text" name="name_ar" value="{{ old('name_ar') }}">
-                        @error('name_ar')
+                        <label for="name:ar">اسم الخدمة بالعربية</label>
+                        <input type="text" name="name:ar" >
+                        @error('name:ar')
                             <div class="alert alert-danger">{{ $message }}</div>
                         @enderror
                     </div>

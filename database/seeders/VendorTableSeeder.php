@@ -19,6 +19,8 @@ class VendorTableSeeder extends Seeder
             'email' => 'Vendor@demo.com',
             'phone' => '+0543037411',
             'password' => '123456',
+            'service_id' =>1,
+
             'email_verified_at' => now(),
             'phone_verified_at' => now(),
         ]);
@@ -29,6 +31,8 @@ class VendorTableSeeder extends Seeder
             'email' => 'Vendor1@demo.com',
             'phone' => '+0543037412',
             'password' => '123456',
+            'service_id' =>1,
+
             'email_verified_at' => now(),
             'phone_verified_at' => now(),
         ]);

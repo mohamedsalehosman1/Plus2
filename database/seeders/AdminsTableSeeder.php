@@ -29,6 +29,7 @@ class AdminsTableSeeder extends Seeder
             'email' => 'admin@demo.com',
             'phone' => '+0543037412',
             'password' => 'Aa@12345',
+            
             'email_verified_at' => now(),
             'phone_verified_at' => now(),
         ]);

@@ -27,4 +27,4 @@ Route::post('send_email', [UpdateEmailController::class, 'sendemail'])->middlewa
 Route::post('update_email', [UpdateEmailController::class, 'updateemail'])->middleware('auth:sanctum');
 Route::post('change_password', [ChangePasswordController::class, 'changepassword'])->middleware('auth:sanctum');
 Route::apiResource('ads', AdController::class)->only('index','show');
-Route::apiResource('services', ServiceController::class);
+Route::apiResource('services', ServiceController::class)->only('index','show');

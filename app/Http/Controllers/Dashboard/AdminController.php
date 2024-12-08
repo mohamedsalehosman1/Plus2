@@ -41,7 +41,7 @@ class AdminController extends Controller implements HasMiddleware
     public function index()
     {
         $admins = $this->repository->index();
-     
+
         return view('admins.index', get_defined_vars());
     }
 
@@ -59,7 +59,7 @@ class AdminController extends Controller implements HasMiddleware
 
     public function store(AdminRequest $request)
     {
-
+     
         $admin = $this->repository->store($request->validated());
 
         $admin->addMediaFromRequest('image')->toMediaCollection('images');

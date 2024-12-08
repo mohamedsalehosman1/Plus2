@@ -7,6 +7,7 @@ use App\Http\Requests\ProfileRequest;
 use App\Http\Requests\VendorRequest;
 use App\Http\Resources\Tests;
 use App\Models\Role;
+use App\Models\Service;
 use App\Models\Vendor;
 use App\Repositories\VendorRepository;
 use Illuminate\Http\Request;
@@ -40,6 +41,8 @@ class VendorController extends Controller implements HasMiddleware
 
     public function index()
     {
+        $services = Service::with('children')->whereNull('parent_id')->get();
+
         $vendors = $this->repository->index();
         return view('vendors.index', get_defined_vars());
     }
@@ -48,20 +51,19 @@ class VendorController extends Controller implements HasMiddleware
     public function create()
     {
         $roles = Role::all();
-        return view('vendors.create', get_defined_vars());
+
+        $services = Service::with('children')->whereNull('parent_id')->get();
+
+        return view('vendors.create', compact('roles', 'services'));
     }
+
+
     public function store(VendorRequest $request)
     {
-
-        $vendor = $this->repository->store($request->validated());
-           $vendor->addMediaFromRequest('image')->toMediaCollection('images');
-
-        $role = Role::where('name', 'vendor')->first();
-        if ($role) {
-            $vendor->roles()->syncWithoutDetaching([$role->id]);
-        }
+        $this->repository->store($request->validated());
         return redirect()->route('vendors.index')->with('success', __('Vendor created successfully.'));
     }
+
     public function show(Vendor $vendor)
     {
         return view('vendors.show', get_defined_vars());

@@ -24,6 +24,8 @@ class AdminRepository implements CrudsInterface, BlockInterface, Softdeleteinter
 
     public function store($data)
     {
+      
+
         return Admin::create($data);
     }
 
