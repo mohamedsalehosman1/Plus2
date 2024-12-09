@@ -14,12 +14,9 @@ class ServiceRepository implements CrudsInterface
 
     public function store($data)
     {
-
-        return Service::create($data);
-
-
-
-
+        $model =Service::create( $data);
+        $model->addMedia($data['image'])->toMediaCollection('images');
+        return $model;
     }
     public function find($id, $withTrashed = false)
     {
@@ -28,7 +25,6 @@ class ServiceRepository implements CrudsInterface
     public function update($data, $model)
     {
         $model->update($data);
-
         if (isset($data['image'])) {
             $model->clearMediaCollection('images');
             $model->addMediaFromRequest('image')->toMediaCollection('images');

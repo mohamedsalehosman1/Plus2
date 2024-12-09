@@ -15,6 +15,7 @@ return new class extends Migration
         Schema::create('vendors', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->string('title');
             $table->string('email')->unique();
             $table->string('password');
             $table->string('phone')->nullable()->unique();
@@ -23,8 +24,8 @@ return new class extends Migration
             $table->timestamp('last_login_at')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->timestamp('phone_verified_at')->nullable();
-            $table->foreignIdFor(Service::class)->onDeleteCascade();
-
+            $table->foreignIdFor(Service::class)->constrained()->onDeleteCascade();
+            $table->boolean('is_favourite')->default(false);
             $table->softDeletes();
             $table->timestamps();
         });

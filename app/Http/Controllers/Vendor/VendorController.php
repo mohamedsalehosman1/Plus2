@@ -71,6 +71,7 @@ class VendorController extends Controller implements HasMiddleware
 
     public function edit(Vendor $vendor)
     {
+        $services = Service::with('children')->whereNull('parent_id')->get();
 
         return view('vendors.update', get_defined_vars());
     }

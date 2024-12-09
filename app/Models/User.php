@@ -59,4 +59,9 @@ class User extends Authenticatable
     {
         return $this->morphOne(ResetToken::class, 'resetable');
     }
+    public function vendors()
+{
+    return $this->belongsToMany(Vendor::class, 'vendor_user');
+}
+
 }

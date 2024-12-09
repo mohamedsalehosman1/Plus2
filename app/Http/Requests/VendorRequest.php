@@ -37,7 +37,7 @@ class   VendorRequest extends FormRequest
             'email' => "required|email|unique:admins",
             'password' => 'required|string|min:8|confirmed',
             'image' => 'nullable|file|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'service_id' => 'nullable|exists:services,id',
+            'service_id' => 'required|exists:services,id',
         ]);
     }
     public function UpdateRules()
@@ -47,7 +47,7 @@ class   VendorRequest extends FormRequest
             'email' => "required|email",
             'password' => 'nullable|string|min:8|confirmed',
             'image' => 'nullable|file|mimes:jpeg,png,jpg,|max:2048',
-            'service_id' => 'nullable|exists:services,id',
+            'service_id' => 'required|exists:services,id',
 
         ]);
     }

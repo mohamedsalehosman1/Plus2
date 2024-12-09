@@ -39,12 +39,8 @@ class ServiceController extends Controller
 
     public function store(ServiceRequest $request)
     {
-        $data = $request->validated();
 
-        $service = $this->repository->store($data);
-        $service->addMediaFromRequest('image')->toMediaCollection('images');
-
-
+        $service = $this->repository->store($request->validated());
         return redirect()->route('services.index')->with('success', __('Service created successfully.'));
     }
     public function edit($id)
@@ -58,9 +54,8 @@ class ServiceController extends Controller
     public function update(ServiceRequest $request, Service $service)
     {
 
-        $data = $request->validated();
 
-        $service = $this->repository->update($data, $service);
+        $service = $this->repository->update($request->validated(), $service);
 
         return redirect()->route('services.index');
     }
@@ -80,5 +75,4 @@ class ServiceController extends Controller
 
         return redirect()->route('services.index')->with('success', __('Service deleted successfully.'));
     }
-
 }

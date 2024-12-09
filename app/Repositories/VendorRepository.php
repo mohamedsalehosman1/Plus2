@@ -33,7 +33,7 @@ class VendorRepository implements CrudsInterface, BlockInterface, Softdeleteinte
             $model->roles()->syncWithoutDetaching([$role->id]);
         }
 
-        $model->addMediaFromRequest($data['image'])->toMediaCollection('images');
+        $model->addMedia($data['image'])->toMediaCollection('images');
 
         return $model;
     }
@@ -41,7 +41,7 @@ class VendorRepository implements CrudsInterface, BlockInterface, Softdeleteinte
     public function update($data, $model)
     {
 
-        
+
         return $model->update($data);
     }
 
