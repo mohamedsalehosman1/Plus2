@@ -17,4 +17,6 @@ return [
     'leave_blank_for_current_password' => 'Leave blank to keep current password',
     'update_vendor' => 'Update Vendor',
     'actions' => 'Actions',
+    'vendor_title'=>'Title',
+
 ];

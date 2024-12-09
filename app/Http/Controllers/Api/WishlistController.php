@@ -20,7 +20,6 @@ class WishlistController extends Controller
 
         $user = Auth::user();
         $vendor = Vendor::find($request->vendor_id);
-
         $pivot = $user->vendors()->where('vendor_id', $vendor->id)->first();
 
         if ($pivot) {
@@ -46,7 +45,6 @@ class WishlistController extends Controller
         if ($vendors->isEmpty()) {
             return $this->errorResponse('قائمة المفضلات فارغة.');
         }
-
         return $this->successResponse($vendors);
     }
 }

@@ -16,6 +16,13 @@
                                 <div class="alert alert-danger">{{ $message }}</div>
                             @enderror
                         </div>
+                        <div class="form-group">
+                            <label for="title">{{ trans('vendors.vendor_title') }}</label>
+                            <input type="text" name="title" value="{{ old('title') }}" id="title" class="form-control">
+                            @error('title')
+                                <div class="alert alert-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
 
                         <div class="form-group">
                             <label for="email">{{ trans('vendors.vendor_email') }}</label>

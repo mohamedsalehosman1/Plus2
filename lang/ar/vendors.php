@@ -7,6 +7,7 @@
         'NewVendor' => 'متجر جديد',
         'create_vendor' => 'إنشاء متجر',
         'vendor_name' => 'اسم المتجر',
+        'vendor_title'=>'عنوان المتجر',
         'vendor_email' => 'بريد المتجر الإلكتروني',
         'password' => 'كلمة المرور',
         'confirm_password' => 'تأكيد كلمة المرور',

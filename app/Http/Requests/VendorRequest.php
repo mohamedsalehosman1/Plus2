@@ -38,6 +38,7 @@ class   VendorRequest extends FormRequest
             'password' => 'required|string|min:8|confirmed',
             'image' => 'nullable|file|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'service_id' => 'required|exists:services,id',
+            'title'=>'required|string|max:255',
         ]);
     }
     public function UpdateRules()
