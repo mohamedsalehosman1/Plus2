@@ -20,9 +20,8 @@ class WishlistController extends Controller
 
         $user = Auth::user();
         $vendor = Vendor::find($request->vendor_id);
-        $pivot = $user->vendors()->where('vendor_id', $vendor->id)->first();
 
-        if ($pivot) {
+        if ($user->vendors()->where('vendor_id', $vendor->id)->first()) {
             $user->vendors()->detach($vendor);
             $vendor->update(['is_favourite' => false]);
             return $this->errorResponse('تم إزالة هذا البائع من قائمة المفضلات.');

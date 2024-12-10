@@ -12,23 +12,23 @@ class ShowVendorController extends Controller
 {
     use ApiResponseTrait;
 
-
-    public function index()
+    public function index(Request $request)
     {
-        $vendors = Vendor::all();
-
+        $vendors = Vendor::byServiceId($request->service_id)->get();
         if ($vendors->isEmpty()) {
             return $this->errorResponse('No vendors found.');
         }
+        return VendorResource::collection($vendors);
+    }
 
-        return VendorResource::collection($vendors);    }
-        public function show($id)
-        {
-            $vendor = Vendor::find($id);
+    public function show($id)
+    {
+        $vendor = Vendor::find($id);
 
-            return new VendorResource($vendor);
-
+        if (!$vendor) {
+            return $this->errorResponse('Vendor not found.');
         }
 
-
+        return new VendorResource($vendor);
+    }
 }

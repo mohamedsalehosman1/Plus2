@@ -61,6 +61,9 @@ class Vendor extends Authenticatable implements LaratrustUser, HasMedia
     public function users()
 {
     return $this->belongsToMany(User::class, 'vendor_user');
+} public function scopeByServiceId($query, $service_Id)
+{
+    return $query->where('service_id', $service_Id);
 }
 
 }

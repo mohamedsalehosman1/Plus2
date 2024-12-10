@@ -8,6 +8,8 @@ use App\Http\Resources\LoginResource;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use App\Traits\ApiResponseTrait;
+use Laravel\Sanctum\PersonalAccessToken;
+use Illuminate\Http\Request;
 
 class AuthLoginController extends Controller
 {
@@ -31,6 +33,29 @@ class AuthLoginController extends Controller
             return new LoginResource($user);
         } else {
             return $this->errorResponse('Error with email or password.');
+        }
+    }
+    public function checkLoginStatus(Request $request)
+    {
+
+        $token = $request->bearerToken();
+
+        if ($token) {
+
+            $tokenRecord = PersonalAccessToken::where('token', hash('sha256', $token))->first();
+
+            if ($tokenRecord) {
+                $user = $tokenRecord->tokenable;
+                return response()->json([
+                    'message' => 'أنت مسجل دخول',
+                    'user' => $user
+                ]);
+            } else {
+
+                return response()->json(['message' => 'أنت زائر ولم تقم بتسجيل الدخول.'], 401);
+            }
+        } else {
+            return response()->json(['message' => 'أنت زائر ولم تقم بتسجيل الدخول.'], 401);
         }
     }
 }

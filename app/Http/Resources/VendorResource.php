@@ -10,20 +10,26 @@ class VendorResource extends JsonResource
     /**
      * Transform the resource collection into an array.
      *
-     *
-     *
      * @return array<int|string, mixed>
      */
     public function toArray(Request $request): array
     {
-        $imageUrl = $this->getFirstMediaUrl('images'); // 'images' هو اسم مجموعة الوسائط في Media Library
+        if ($request->route()->getName() == 'vendors.index') {
+            return [
+                'id' => $this->id,
+                'name'   => $this->name,
+                'title'  => $this->title,
+                'image'  => $this->getFirstMediaUrl('images'),
+            ];
+        }
 
         return [
-            'name'   => $this->name,
-            'title'  => $this->title,
-            'image'  => $imageUrl,  // عرض الرابط الكامل للصورة
+            'id' => $this->id,
+            'name'        => $this->name,
+            'title'       => $this->title,
+            'image'       => $this->getFirstMediaUrl('images'),
+            'is_favourite' => $this->is_favourite,
+            'coupon'      => $this->coupons,
         ];
     }
-
-
 }
