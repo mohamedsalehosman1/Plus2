@@ -19,8 +19,8 @@ class AuthLoginController extends Controller
     {
         $credentials = $request->validated();
 
-        if (auth()->attempt($credentials)) {
-            $user = Auth::user();
+        if (Auth::attempt($credentials)) {
+            $user = auth()->user();
 
             if (!$user->hasVerifiedEmail()) {
                 return $this->errorResponse('Please verify your email address.');
@@ -35,27 +35,27 @@ class AuthLoginController extends Controller
             return $this->errorResponse('Error with email or password.');
         }
     }
-    public function checkLoginStatus(Request $request)
-    {
+    // public function checkLoginStatus(Request $request)
+    // {
 
-        $token = $request->bearerToken();
+    //     $token = $request->bearerToken();
 
-        if ($token) {
+    //     if ($token) {
 
-            $tokenRecord = PersonalAccessToken::where('token', hash('sha256', $token))->first();
+    //         $tokenRecord = PersonalAccessToken::where('token', hash('sha256', $token))->first();
 
-            if ($tokenRecord) {
-                $user = $tokenRecord->tokenable;
-                return response()->json([
-                    'message' => 'أنت مسجل دخول',
-                    'user' => $user
-                ]);
-            } else {
+    //         if ($tokenRecord) {
+    //             $user = $tokenRecord->tokenable;
+    //             return response()->json([
+    //                 'message' => 'أنت مسجل دخول',
+    //                 'user' => $user
+    //             ]);
+    //         } else {
 
-                return response()->json(['message' => 'أنت زائر ولم تقم بتسجيل الدخول.'], 401);
-            }
-        } else {
-            return response()->json(['message' => 'أنت زائر ولم تقم بتسجيل الدخول.'], 401);
-        }
-    }
+    //             return response()->json(['message' => 'أنت زائر ولم تقم بتسجيل الدخول.'], 401);
+    //         }
+    //     } else {
+    //         return response()->json(['message' => 'أنت زائر ولم تقم بتسجيل الدخول.'], 401);
+    //     }
+    // }
 }

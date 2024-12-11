@@ -25,7 +25,6 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->timestamp('phone_verified_at')->nullable();
             $table->foreignIdFor(Service::class)->constrained()->onDeleteCascade();
-            $table->boolean('is_favourite')->default(false);
             $table->softDeletes();
             $table->timestamps();
         });

@@ -15,26 +15,23 @@ class ServiceController extends Controller
 {
     use ApiResponseTrait;
 
-public function index(){
-    $service = Service::with('translations')->get();
+    public function index()
+    {
+        $service = Service::get();
 
         return ServiceResource::collection($service);
-}
-public function show($id){
-    $service = Service::with('translations')->findOrFail($id);
-    return new ServiceResource($service);
-}
-// public function showvendor($id){
-//     $service = Service::find($id);
-//     $vendor = Vendor::where('service_id', $service->id)->get();
+    }
+    public function show(Service $service)
+    {
+        return new ServiceResource($service);
+    }
 
-//  return new VendorResource($vendor);
-// }
-public function store(ServiceRequest $request)
-{
-    $data =$request->validated();
-    $service = Service::create($data);
+    // public function store(ServiceRequest $request)
+    // {
+    //     $data = $request->validated();
+    //     $service = Service::create($data);
 
-    // إرجاع الاستجابة مع الخدمة الجديدة
-    return new ServiceResource($service);
-}}
+    //     // إرجاع الاستجابة مع الخدمة الجديدة
+    //     return new ServiceResource($service);
+    // }
+}

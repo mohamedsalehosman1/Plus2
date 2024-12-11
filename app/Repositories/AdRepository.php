@@ -10,16 +10,21 @@ class AdRepository implements CrudsInterface
 {
     public function index($vendor_id = null)
     {
-            return Ad::when(auth('vendors')->user(),function($q){
-                $q->where('vendor_id', auth('vendors')->user()->id);
-            })->get();
-
+        return Ad::when(auth('vendors')->user(), function ($q) {
+            $q->where('vendor_id', auth('vendors')->user()->id);
+        })->get();
     }
 
     public function store($data)
     {
         // إنشاء الإعلان الجديد باستخدام البيانات المدخلة
-        return Ad::create($data);
+        $ad = Ad::create($data);
+
+        if (isset($data['image'])) {
+            $ad->addMedia('image')->toMediaCollection('images');
+        }
+
+        return $ad;
     }
 
     public function update($data, $model)
@@ -68,4 +73,3 @@ class AdRepository implements CrudsInterface
         return $Ad->save();
     }
 }
-

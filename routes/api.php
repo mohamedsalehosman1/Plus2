@@ -6,7 +6,7 @@ use App\Http\Controllers\Api\AuthRegisterController;
 use App\Http\Controllers\Api\ChangePasswordController;
 use App\Http\Controllers\Api\ResetPasswordController;
 use App\Http\Controllers\Api\ServiceController;
-use App\Http\Controllers\Api\ShowVendorController;
+use App\Http\Controllers\Api\VendorController;
 use App\Http\Controllers\Api\UpdateEmailController;
 use App\Http\Controllers\Api\VerificationController;
 use App\Http\Controllers\Api\WishlistController;
@@ -30,9 +30,8 @@ Route::post('update_email', [UpdateEmailController::class, 'updateemail'])->midd
 Route::post('change_password', [ChangePasswordController::class, 'changepassword'])->middleware('auth:sanctum');
 Route::apiResource('ads', AdController::class)->only('index','show');
 Route::apiResource('services', ServiceController::class)->only('index','show');
-Route::get('showvendor/{id}', [ServiceController::class,'showvendor']);
 Route::post('addwishlist', [WishlistController::class, 'addToWishlist'])->middleware('auth:sanctum');
 Route::get('showwishlist', [WishlistController::class, 'showWishlist'])->middleware('auth:sanctum');
 
-Route::apiResource('/vendors', ShowVendorController::class)->middleware('auth:sanctum');
+Route::apiResource('/vendors', VendorController::class);
 Route::get('check-login', [AuthLoginController::class, 'checkLoginStatus']);

@@ -18,9 +18,9 @@ class VerificationController extends Controller
     {
         $verification = Verification::where('email', $request->email)->first();
 
-        if (!$verification) {
-            return $this->errorResponse('Email not found. Please check your email address.');
-        }
+        // if (!$verification) {
+        //     return $this->errorResponse('Email not found. Please check your email address.');
+        // }
 
         if ($verification->code !== $request->code) {
             return $this->errorResponse('Invalid verification code. Please check and try again.');

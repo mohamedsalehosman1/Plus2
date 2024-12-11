@@ -54,16 +54,27 @@ class Vendor extends Authenticatable implements LaratrustUser, HasMedia
     {
         return $this->hasMany(Coupon::class);
     }
+
+    public function activeCoupon()
+    {
+        return $this->hasOne(Coupon::class)->where([
+            'is_active'=> 1,
+        ]);
+    }
+
     public function ads()
     {
         return $this->hasMany(Ad::class);
     }
     public function users()
-{
-    return $this->belongsToMany(User::class, 'vendor_user');
-} public function scopeByServiceId($query, $service_Id)
-{
-    return $query->where('service_id', $service_Id);
-}
-
+    {
+        return $this->belongsToMany(User::class, 'vendor_user');
+    }
+    public function scopeByServiceId($query)
+    {
+        if (request('service_id')) {
+            return $query->where('service_id', request('service_id'));
+        }
+        return $query;
+    }
 }

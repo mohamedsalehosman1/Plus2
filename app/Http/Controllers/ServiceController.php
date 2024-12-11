@@ -61,13 +61,13 @@ class ServiceController extends Controller
     }
     public function destroy(Service $service)
     {
-        $vendor = Vendor::where('service_id', $service->id)->first();
+        $vendor = Vendor::where('service_id', $service->id)->exists();
 
         if ($vendor) {
             return redirect()->route('services.index')->with('error', __('Cannot delete service because it is linked to a vendor.'));
         }
 
-        if ($service->children->isNotEmpty()) {
+        if ($service->children()->exists()) {
             return redirect()->route('services.index')->with('error', __('Cannot delete service with sub-services.'));
         }
 

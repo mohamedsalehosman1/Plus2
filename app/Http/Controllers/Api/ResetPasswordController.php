@@ -37,8 +37,13 @@ class ResetPasswordController extends Controller
 
     public function resettoken(ResetTokenRequest $request)
     {
-        $user = User::where('email', $request->email)->first();
+        $resetPassword = ResetPassword::where('email', $request->email)->first();
 
+        if ($resetPassword->code != $request->code) {
+            return $this->errorResponse('the ocde is wrong');
+        }
+
+        $user = $resetPassword->resetable;
 
         $user->reset_password_code()->delete();
         $user->reset_password_token()->delete();
@@ -57,11 +62,11 @@ class ResetPasswordController extends Controller
         $user = User::whereHas('reset_password_token', function ($query) use ($request) {
             $query->where('token', $request->token);
         })->first();
-        if(!$user){
 
-            return $this->errorResponse('error');
-
+        if (!$user) {
+            return $this->errorResponse('some error has habben ,please try again .');
         }
+
         $user->password = $request->password;
         $user->save();
 

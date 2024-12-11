@@ -9,6 +9,7 @@ use App\Repositories\AdRepository;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
+
 class AdController extends Controller implements HasMiddleware
 {
     private $repository;
@@ -36,22 +37,13 @@ class AdController extends Controller implements HasMiddleware
     public function create()
     {
         $vendors = auth("admins")->check() ? Vendor::pluck('name', 'id')->toArray() : [];
+
         return view('ads.create', get_defined_vars());
     }
 
     public function store(AdRequest $request)
     {
-        $data = $request->validated();
-        $ad = $this->repository->store($data);
- if ($request->hasFile('image')) {
-            $ad->addMediaFromRequest('image')->toMediaCollection('images');
-        }
-
-        if (auth('vendors')->check()) {
-            $ad->vendor_id = auth('vendors')->user()->id;
-            $ad->save();
-        }
-
+        $ad = $this->repository->store($request->validated());
 
         return redirect()->route('ads.index')->with('success', __('Ad Added successfully.'));
     }
@@ -59,6 +51,7 @@ class AdController extends Controller implements HasMiddleware
     public function edit(Ad $ad)
     {
         $vendors = auth("admins")->check() ? Vendor::pluck('name', 'id')->toArray() : [];
+
         return view('ads.edit', get_defined_vars());
     }
 

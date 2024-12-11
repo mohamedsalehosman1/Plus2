@@ -23,16 +23,12 @@ class WishlistController extends Controller
 
         if ($user->vendors()->where('vendor_id', $vendor->id)->first()) {
             $user->vendors()->detach($vendor);
-            $vendor->update(['is_favourite' => false]);
-            return $this->errorResponse('تم إزالة هذا البائع من قائمة المفضلات.');
+            return $this->errorResponse('Vendor Deleted From Favourite List');
         }
-
         $user->vendors()->attach($vendor);
-        $vendor->update(['is_favourite' => true]);
-
         return $this->successResponse([
             'vendor' => $vendor,
-            'message' => 'تم إضافة البائع إلى قائمة المفضلات بنجاح!',
+            'message' => 'Vendor Added to Favourite List',
         ]);
     }
 
@@ -41,9 +37,6 @@ class WishlistController extends Controller
         $user = Auth::user();
         $vendors = $user->vendors;
 
-        if ($vendors->isEmpty()) {
-            return $this->errorResponse('قائمة المفضلات فارغة.');
-        }
         return $this->successResponse($vendors);
     }
 }
