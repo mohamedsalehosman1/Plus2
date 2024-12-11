@@ -41,8 +41,14 @@ class VendorRepository implements CrudsInterface, BlockInterface, Softdeleteinte
     public function update($data, $model)
     {
 
+        $model->update($data);
 
-        return $model->update($data);
+        if (isset($data['image'])) {
+            $model->clearMediaCollection('images');
+            $model->addMedia($data['image'])->toMediaCollection('images');
+        }
+
+        return $model;
     }
 
     public function destroy($model)

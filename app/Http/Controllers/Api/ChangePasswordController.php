@@ -17,9 +17,7 @@ class ChangePasswordController extends Controller
     {
         $user = Auth::user();
 
-        // if ($request->current_password != $user->password) {
-        //     return $this->errorResponse('The current password is incorrect.');
-        // }
+     
         if (!Hash::check($request->current_password, $user->password)) {
             return $this->errorResponse('The current password is incorrect.');
         }

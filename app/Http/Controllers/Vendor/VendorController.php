@@ -88,10 +88,10 @@ class VendorController extends Controller implements HasMiddleware
 
         $vendor->update($request->except('password'));
 
-        if ($request->hasFile('image')) {
-            $vendor->clearMediaCollection('images');
-            $vendor->addMediaFromRequest('image')->toMediaCollection('images');
-        }
+        // if ($request->hasFile('image')) {
+        //     $vendor->clearMediaCollection('images');
+        //     $vendor->addMediaFromRequest('image')->toMediaCollection('images');
+        // }
 
         return redirect()->route('vendors.index')->with('success', __('Vendor updated successfully.'));
     }

@@ -28,9 +28,8 @@ class ServiceController extends Controller
         $parentId = $request->get('parentId');
         return view('services.create', get_defined_vars());
     }
-    public function show($id)
+    public function show(Service $service)
     {
-        $service = Service::with('children')->findOrFail($id);
 
         $sub_service = $service->children;
 
@@ -53,8 +52,6 @@ class ServiceController extends Controller
 
     public function update(ServiceRequest $request, Service $service)
     {
-
-
         $service = $this->repository->update($request->validated(), $service);
 
         return redirect()->route('services.index');
