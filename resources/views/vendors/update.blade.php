@@ -47,6 +47,9 @@
                         <div class="form-group">
                             <label for="password_confirmation">{{ trans('vendors.confirm_password') }}</label>
                             <input type="password" name="password_confirmation" id="password_confirmation" class="form-control">
+                            @error('password')
+                            <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
                         </div>
 
                         <!-- خدمة الأم -->

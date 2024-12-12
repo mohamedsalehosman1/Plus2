@@ -16,11 +16,7 @@ class AuthRegisterController extends Controller
 
     public function register(RegisterRequest $request)
     {
-        // $checkuser = User::where('email', $request->email)->first();
-        // if ($checkuser) {
-        //     return $this->errorResponse('Email already Exists');
-        // }
-
+      
         $user = User::create($request->validated());
 
         $code = Str::random(4);

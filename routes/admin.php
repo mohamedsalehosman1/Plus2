@@ -5,6 +5,7 @@ use App\Http\Controllers\CouponController;
 use App\Http\Controllers\Dashboard\AdminController;
 use App\Http\Controllers\Dashboard\AuthAdminController;
 use App\Http\Controllers\Dashboard\ForgetPasswordController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\Vendor\VendorController;
@@ -33,7 +34,7 @@ Route::group(
         Route::get('admins/{id}/restore', [AdminController::class, 'restore'])->name('admins.restore');
         Route::resource('admins', AdminController::class);
         Route::get('profile', [AdminController::class, 'showProfile'])->name('admin.profile');
-        Route::post('update-profile', [AdminController::class, 'updateProfile'])->name('admin.updateProfile');
+        Route::post('update-profile', [ProfileController::class, 'updateProfile'])->name('admin.updateProfile');
         Route::resource('roles', RoleController::class);
 
 

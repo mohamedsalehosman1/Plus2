@@ -59,7 +59,7 @@ class AdminController extends Controller implements HasMiddleware
 
     public function store(AdminRequest $request)
     {
-     
+
         $admin = $this->repository->store($request->validated());
 
         $admin->addMediaFromRequest('image')->toMediaCollection('images');
@@ -148,21 +148,5 @@ class AdminController extends Controller implements HasMiddleware
         return view('profile', get_defined_vars());
     }
 
-    public function updateProfile(ProfileRequest $request)
-    {
-        $admin = Auth::guard('admins')->user();
-        $data = $request->validated();
-        if (isset($data["image"])) {
-            $admin->clearMediaCollection('images');
-            $admin->addMediaFromRequest('image')->toMediaCollection('images');
-        }
-
-        if (!$data["password"]) {
-            unset($data["password"]);
-        }
-        $admin->roles()->sync($request->roles);
-
-        $admin->update($data);
-        return redirect()->route('admin.profile')->with('success', 'تم تحديث البيانات بنجاح!');
-    }
+   
 }

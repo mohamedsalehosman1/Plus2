@@ -34,9 +34,6 @@ class WishlistController extends Controller
     {
         $user =auth()->user();
         $vendors = $user->vendors;
-        // $is_favourite = $user->vendors()->where('vendor_id', $vendor->id);
-
-
 
         return $this->successResponse($vendors);
     }

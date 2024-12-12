@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CouponController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Vendor\AuthVendorController;
 use App\Http\Controllers\Vendor\VendorController;
 use App\Http\Middleware\RedirectIfAuthenticated;
@@ -11,8 +12,7 @@ Route::name("vendors.")->prefix('vendor')->group(function () {
     Route::post('/login', [AuthVendorController::class, 'login'])->name('login');
     Route::post('/logout', [AuthVendorController::class, 'logout'])->name('logout');
     Route::get('profile', [VendorController::class, 'showProfile'])->name('profile');
-    Route::post('update-profile', [VendorController::class, 'updateProfile'])->name('updateProfile');
-    // Route::get('/login', [AuthVendorController::class, 'login'])->name('loginAsvendor');
+    Route::post('update-profile', [ProfileController::class, 'updateProfile'])->name('updateProfile');
 
     Route::middleware('auth:vendors')->group(function () {
         Route::get('/', function () {

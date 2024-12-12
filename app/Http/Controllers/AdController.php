@@ -57,18 +57,12 @@ class AdController extends Controller implements HasMiddleware
 
     public function update(AdRequest $request, Ad $ad)
     {
-        $data = $request->validated();
-
-        if ($request->hasFile('image')) {
-            $ad->clearMediaCollection('images');
-            $ad->addMediaFromRequest('image')->toMediaCollection('images');
-        }
 
         if (auth('vendors')->check()) {
             $data['vendor_id'] = auth('vendors')->user()->id;
         }
 
-        $this->repository->update($data, $ad);
+        $this->repository->update($request->validated(), $ad);
         return redirect()->route("ads.index")->with('success', __('Ad Updated successfully.'));
     }
 

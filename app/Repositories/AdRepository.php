@@ -17,37 +17,38 @@ class AdRepository implements CrudsInterface
 
     public function store($data)
     {
-        // إنشاء الإعلان الجديد باستخدام البيانات المدخلة
-        $ad = Ad::create($data);
+        $model = Ad::create($data);
 
-        if (isset($data['image'])) {
-            $ad->addMedia('image')->toMediaCollection('images');
-        }
 
-        return $ad;
+        $model->addMedia($data['image'])->toMediaCollection('images');
+
+
+        return $model;
     }
 
     public function update($data, $model)
     {
-        // تحديث الإعلان بناءً على البيانات المدخلة
+
+        if (isset($data['image'])) {
+            $model->clearMediaCollection('images');
+            $model->addMediaFromRequest('image')->toMediaCollection('images');
+        }
         return $model->update($data);
     }
 
     public function destroy($model)
     {
-        // حذف الإعلان
         return $model->delete();
     }
 
     public function trash()
     {
-        // جلب الإعلانات المحذوفة
         return Ad::onlyTrashed()->paginate(request('perPage'));
     }
 
     public function find($id, $withTrashed = false)
     {
-        // جلب الإعلان بناءً على الـ ID، مع إمكانية تضمين الإعلانات المحذوفة إذا كان معلم "withTrashed" مفعلًا
+
         return Ad::when($withTrashed, function ($q) {
             return $q->withTrashed();
         })->findOrFail($id);
@@ -55,20 +56,16 @@ class AdRepository implements CrudsInterface
 
     public function restore($model)
     {
-        // استعادة الإعلان المحذوف
         return $model->restore();
     }
 
-    public function updateStatus(Ad $Ad)
+    public function updateStatus($data, $model)
     {
-        // تحديث حالة الإعلان بين التنشيط والتعطيل
         if (!$Ad->status) {
-            // إذا كان الإعلان غير نشط، يتم تعطيل جميع الإعلانات الأخرى للبائع نفسه
             Ad::where('vendor_id', $Ad->vendor_id)
                 ->update(['status' => false]);
         }
 
-        // تغيير حالة الإعلان الحالية بين التنشيط والتعطيل
         $Ad->status = !$Ad->status;
         return $Ad->save();
     }

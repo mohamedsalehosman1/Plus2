@@ -76,22 +76,10 @@ class VendorController extends Controller implements HasMiddleware
         return view('vendors.update', get_defined_vars());
     }
 
-    public function update(VendorRequest $request, $id)
+    public function update(VendorRequest $request, Vendor $vendor)
     {
-        $vendor = $this->repository->find($id);
 
-        if ($request->has('password') && $request->password) {
-            $vendor->password = $request->password;
-        } else {
-            $request->request->remove('password');
-        }
-
-        $vendor->update($request->except('password'));
-
-        // if ($request->hasFile('image')) {
-        //     $vendor->clearMediaCollection('images');
-        //     $vendor->addMediaFromRequest('image')->toMediaCollection('images');
-        // }
+        $this->repository->update($request->validated(), $vendor);
 
         return redirect()->route('vendors.index')->with('success', __('Vendor updated successfully.'));
     }
@@ -130,20 +118,4 @@ class VendorController extends Controller implements HasMiddleware
         return view('profile', compact('vendor'));
     }
 
-    public function updateProfile(ProfileRequest $request)
-    {
-        $vendor = Auth::guard('vendors')->user();
-        $data = $request->validated();
-        if (isset($data["image"])) {
-            $vendor->clearMediaCollection('images');
-            $vendor->addMediaFromRequest('image')->toMediaCollection('images');
-        }
-
-        if (!$data["password"]) {
-            unset($data["password"]);
-        }
-
-        $vendor->update($data);
-        return redirect()->route('vendors.profile')->with('success', 'تم تحديث البيانات بنجاح!');
     }
-}
