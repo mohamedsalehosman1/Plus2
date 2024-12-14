@@ -24,16 +24,37 @@ class AdminRepository implements CrudsInterface, BlockInterface, Softdeleteinter
 
     public function store($data)
     {
-      
 
-        return Admin::create($data);
+        $model =  Admin::create($data);
+        $model->addMediaFromRequest('image')->toMediaCollection('images');
+        return $model;
     }
 
     public function update($data, $model)
     {
-        return $model->update($data);
-    }
+        if (is_null($data['password'])) {
+            unset($data['password']);
+        }
 
+        $model->update($data);
+        if (isset($data['image'])) {
+            $model->clearMediaCollection('images');
+            $model->addMediaFromRequest('image')->toMediaCollection('images');
+        }
+
+        return $model;
+    }
+    public function updateProfile($data, $model)
+    {
+
+        $model->update($data);
+        if (isset($data['image'])) {
+            $model->clearMediaCollection('images');
+            $model->addMediaFromRequest('image')->toMediaCollection('images');
+        }
+
+        return $model;
+    }
     public function destroy($model)
     {
         return $model->delete();

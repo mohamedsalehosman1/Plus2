@@ -42,9 +42,8 @@ class ServiceController extends Controller
         $service = $this->repository->store($request->validated());
         return redirect()->route('services.index')->with('success', __('Service created successfully.'));
     }
-    public function edit($id)
+    public function edit(Service $service)
     {
-        $service = Service::findOrFail($id);
         return view('services.edit', get_defined_vars());
     }
 
@@ -52,7 +51,7 @@ class ServiceController extends Controller
 
     public function update(ServiceRequest $request, Service $service)
     {
-        $service = $this->repository->update($request->validated(), $service);
+         $this->repository->update($request->validated(), $service);
 
         return redirect()->route('services.index');
     }

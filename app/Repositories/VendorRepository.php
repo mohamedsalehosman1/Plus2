@@ -41,13 +41,16 @@ class VendorRepository implements CrudsInterface, BlockInterface, Softdeleteinte
     public function update($data, $model)
     {
 
+        if (is_null($data['service_id']))
+            unset($data['service_id']);
+        if (is_null($data['password']))
+            unset($data['password']);
         $model->update($data);
 
         if (isset($data['image'])) {
             $model->clearMediaCollection('images');
             $model->addMedia($data['image'])->toMediaCollection('images');
         }
-
         return $model;
     }
 
@@ -75,5 +78,8 @@ class VendorRepository implements CrudsInterface, BlockInterface, Softdeleteinte
     public function unblock($model)
     {
         return $model->update(["blocked_at", null]);
+    }
+    public function updateProfile($data, $model){
+        
     }
 }

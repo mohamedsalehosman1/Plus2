@@ -17,9 +17,9 @@ class AuthLoginController extends Controller
 
     public function login(LoginRequest $request)
     {
-        $credentials = $request->validated();
 
-        if (Auth::attempt($credentials)) {
+
+        if (Auth::attempt(  $request->validated())) {
             $user = auth()->user();
 
             if (!$user->hasVerifiedEmail()) {
@@ -35,27 +35,5 @@ class AuthLoginController extends Controller
             return $this->errorResponse('Error with email or password.');
         }
     }
-    // public function checkLoginStatus(Request $request)
-    // {
 
-    //     $token = $request->bearerToken();
-
-    //     if ($token) {
-
-    //         $tokenRecord = PersonalAccessToken::where('token', hash('sha256', $token))->first();
-
-    //         if ($tokenRecord) {
-    //             $user = $tokenRecord->tokenable;
-    //             return response()->json([
-    //                 'message' => 'أنت مسجل دخول',
-    //                 'user' => $user
-    //             ]);
-    //         } else {
-
-    //             return response()->json(['message' => 'أنت زائر ولم تقم بتسجيل الدخول.'], 401);
-    //         }
-    //     } else {
-    //         return response()->json(['message' => 'أنت زائر ولم تقم بتسجيل الدخول.'], 401);
-    //     }
-    // }
 }

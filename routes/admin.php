@@ -52,12 +52,11 @@ Route::group(
     ],
     function () {
         Route::put('coupons/update-status/{coupon}', [CouponController::class, 'updateStatus'])->name('coupons.updateStatus');
-        Route::resource('coupons', CouponController::class);
+        Route::resource('coupons', CouponController::class)->parameters(['coupons' => 'coupon:code']);
         Route::put('ads/update-status/{Ad}', [AdController::class, 'updateStatus'])->name('ads.updateStatus');
 
         Route::resource('ads', AdController::class);
         Route::resource('services', ServiceController::class);
-
     }
 
 
@@ -69,8 +68,4 @@ Route::group(['prefix' => 'password', 'as' => 'password.'], function () {
     Route::post('/forgot', [ForgetPasswordController::class, 'sendResetLinkEmail'])->name('email');
     Route::post('/reset', [ForgetPasswordController::class, 'showResetForm'])->name('reset');
     Route::post('/reset', [ForgetPasswordController::class, 'reset'])->name('update');
-
 });
-
-
-

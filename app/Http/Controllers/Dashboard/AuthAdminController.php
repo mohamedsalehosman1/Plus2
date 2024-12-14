@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\AdminLoginRequest;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -14,14 +16,12 @@ class AuthAdminController extends Controller
     {
         return view('login');
     }
-    public function login(Request $request)
+    public function login(AdminLoginRequest $request)
     {
-        $request->validate([
-            'email' => 'required|email',
-            'password' => 'required',
-        ]);
 
-        if (Auth::guard('admins')->attempt(['email' => $request->email, 'password' => $request->password])) {
+        $credintials = $request->validated();
+
+        if (Auth::guard('admins')->attempt($credintials)) {
             return redirect()->route('home');
         }
 

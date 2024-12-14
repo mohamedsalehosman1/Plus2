@@ -48,7 +48,7 @@ class   VendorRequest extends FormRequest
             'email' => "required|email",
             'password' => 'nullable|string|min:8|confirmed',
             'image' => 'nullable|file|mimes:jpeg,png,jpg,|max:2048',
-            'service_id' => 'required|exists:services,id',
+            'service_id' => 'nullable|exists:services,id',
 
         ]);
     }

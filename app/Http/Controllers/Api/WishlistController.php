@@ -17,7 +17,7 @@ class WishlistController extends Controller
     {
 
 
-        $user =auth()->user();
+        $user = auth()->user();
         $vendor = Vendor::find($request->vendor_id);
         if ($user->vendors()->where('vendor_id', $vendor->id)->first()) {
             $user->vendors()->detach($vendor);
@@ -32,9 +32,8 @@ class WishlistController extends Controller
 
     public function showWishlist()
     {
-        $user =auth()->user();
+        $user = auth()->user();
         $vendors = $user->vendors;
-        // $is_favourite = $user->vendors()->where('vendor_id', $vendor->id);
 
 
 

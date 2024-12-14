@@ -76,22 +76,14 @@ class VendorController extends Controller implements HasMiddleware
         return view('vendors.update', get_defined_vars());
     }
 
-    public function update(VendorRequest $request, $id)
+    public function update(VendorRequest $request, Vendor $vendor)
     {
-        $vendor = $this->repository->find($id);
 
-        if ($request->has('password') && $request->password) {
-            $vendor->password = $request->password;
-        } else {
-            $request->request->remove('password');
-        }
 
-        $vendor->update($request->except('password'));
+        $this->repository->update($request->validated(), $vendor);
 
-        // if ($request->hasFile('image')) {
-        //     $vendor->clearMediaCollection('images');
-        //     $vendor->addMediaFromRequest('image')->toMediaCollection('images');
-        // }
+
+
 
         return redirect()->route('vendors.index')->with('success', __('Vendor updated successfully.'));
     }
@@ -118,9 +110,8 @@ class VendorController extends Controller implements HasMiddleware
         return redirect()->route('vendors.trash')->with('success', __('Vendor restored successfully.'));
     }
 
-    public function forcedelete($id)
+    public function forcedelete(Vendor $vendor)
     {
-        $vendor = Vendor::withTrashed()->findOrFail($id);
         $vendor->forceDelete();
         return redirect()->route('vendors.index')->with('success', trans('vendors.vendor_deleted_permanently'));
     }

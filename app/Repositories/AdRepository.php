@@ -17,20 +17,23 @@ class AdRepository implements CrudsInterface
 
     public function store($data)
     {
-        // إنشاء الإعلان الجديد باستخدام البيانات المدخلة
-        $ad = Ad::create($data);
+        $model = Ad::create($data);
 
-        if (isset($data['image'])) {
-            $ad->addMedia('image')->toMediaCollection('images');
-        }
 
-        return $ad;
+        $model->addMediaFromRequest('image')->toMediaCollection('images');
+
+
+        return $model;
     }
 
     public function update($data, $model)
     {
-        // تحديث الإعلان بناءً على البيانات المدخلة
-        return $model->update($data);
+        $model->update($data);
+        if (isset($data['image'])) {
+            $model->clearMediaCollection('images');
+            $model->addMedia($data['image'])->toMediaCollection('images');
+        }
+        return $model;
     }
 
     public function destroy($model)

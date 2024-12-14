@@ -18,9 +18,8 @@ class AdController extends Controller
     }
 
 
-    public function show($id)
+    public function show(Ad $ad)
     {
-        $ad = Ad::with('vendor')->findOrFail($id);
 
         return new AdResource($ad);
     }

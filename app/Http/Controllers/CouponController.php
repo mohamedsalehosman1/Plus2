@@ -37,7 +37,6 @@ class CouponController extends Controller
 
     public function store(CouponRequest $request)
     {
-        // dd($request);
         $this->repository->store($request->validated());
 
         return redirect()->route("coupons.index")->with('success', __('Coupon Added successfully.'));
@@ -45,7 +44,6 @@ class CouponController extends Controller
 
     public function show(Coupon $coupon, Vendor $vendors)
     {
-        // Logic for showing coupon details
     }
 
     public function edit(Coupon $coupon)

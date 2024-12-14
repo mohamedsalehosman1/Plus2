@@ -25,13 +25,4 @@ class ServiceController extends Controller
     {
         return new ServiceResource($service);
     }
-
-    // public function store(ServiceRequest $request)
-    // {
-    //     $data = $request->validated();
-    //     $service = Service::create($data);
-
-    //     // إرجاع الاستجابة مع الخدمة الجديدة
-    //     return new ServiceResource($service);
-    // }
 }

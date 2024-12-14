@@ -32,26 +32,22 @@ class UpdateEmailController extends Controller
 
         return $this->successResponse(['code' => $code], 'تم إرسال كود التحقق الجديد إلى بريدك الإلكتروني.');
     }
-public function updateemail(VerfiyRequest $request){
-    $user = Auth::user();
+    public function updatemail(VerfiyRequest $request)
+    {
+        $user = Auth::user();
 
-    $verification = Verification::where('email', $request->email)->first();
+        $verification = Verification::where('email', $request->email)->first();
 
-    // if (!$verification) {
-    //     return $this->errorResponse('Email not found. Please check your email address.');
-    // }
+        if ($verification->code !== $request->code) {
+            return $this->errorResponse('Invalid verification code. Please check and try again.');
+        }
 
-    if ($verification->code !== $request->code) {
-        return $this->errorResponse('Invalid verification code. Please check and try again.');
+        $user->email = $request->email;
+        $user->email_verified_at = now();
+        $user->save();
+
+        $verification->delete();
+
+        return $this->successResponse('Email successfully verified.');
     }
-
-    $user->email =$request->email;
-    $user->email_verified_at = now();
-    $user->save();
-
-    $verification->delete();
-
-    return $this->successResponse( 'Email successfully verified.');
 }
-}
-
