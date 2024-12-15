@@ -16,7 +16,8 @@ class AuthRegisterController extends Controller
 
     public function register(RegisterRequest $request)
     {
-      
+
+
         $user = User::create($request->validated());
 
         $code = Str::random(4);

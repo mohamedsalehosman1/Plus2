@@ -81,4 +81,7 @@ class VendorRepository implements CrudsInterface, BlockInterface, Softdeleteinte
     {
         return $model->update(["blocked_at", null]);
     }
+    public function updateProfile($data, $model){
+
+    }
 }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\WishListRequest;
+use App\Http\Resources\VendorBreifResource;
 use App\Models\Vendor;
 use App\Traits\ApiResponseTrait;
 use Illuminate\Http\Request;
@@ -17,24 +18,21 @@ class WishlistController extends Controller
     {
 
 
-        $user =auth()->user();
+        $user = auth()->user();
         $vendor = Vendor::find($request->vendor_id);
         if ($user->vendors()->where('vendor_id', $vendor->id)->first()) {
             $user->vendors()->detach($vendor);
             return $this->errorResponse('Vendor Deleted From Favourite List');
         }
         $user->vendors()->attach($vendor);
-        return $this->successResponse([
-            'vendor' => $vendor,
-            'message' => 'Vendor Added to Favourite List',
-        ]);
+        return $this->successResponse( new VendorBreifResource(      $vendor) );
+
     }
 
     public function showWishlist()
     {
-        $user =auth()->user();
+        $user = auth()->user();
         $vendors = $user->vendors;
-
-        return $this->successResponse($vendors);
+        return $this->successResponse(VendorBreifResource::collection($vendors));
     }
 }

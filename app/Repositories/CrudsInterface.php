@@ -10,4 +10,5 @@ interface CrudsInterface
     public function update($data, $model);
     public function destroy($model);
     public function find($id, $withTrashed);
+
 }

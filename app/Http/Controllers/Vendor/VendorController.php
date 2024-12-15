@@ -106,9 +106,8 @@ class VendorController extends Controller implements HasMiddleware
         return redirect()->route('vendors.trash')->with('success', __('Vendor restored successfully.'));
     }
 
-    public function forcedelete($id)
+    public function forcedelete(Vendor $vendor)
     {
-        $vendor = Vendor::withTrashed()->findOrFail($id);
         $vendor->forceDelete();
         return redirect()->route('vendors.index')->with('success', trans('vendors.vendor_deleted_permanently'));
     }

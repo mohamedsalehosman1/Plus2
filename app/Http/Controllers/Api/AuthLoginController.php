@@ -17,9 +17,9 @@ class AuthLoginController extends Controller
 
     public function login(LoginRequest $request)
     {
-        $credentials = $request->validated();
 
-        if (Auth::attempt($credentials)) {
+
+        if (Auth::attempt(  $request->validated())) {
             $user = auth()->user();
 
             if (!$user->hasVerifiedEmail()) {

@@ -68,7 +68,6 @@ class AdController extends Controller implements HasMiddleware
 
     public function destroy(Ad $ad)
     {
-        $ad->clearMediaCollection('images');
         $this->repository->destroy($ad);
         return redirect()->route("ads.index")->with('success', __('Ad Deleted successfully.'));
     }

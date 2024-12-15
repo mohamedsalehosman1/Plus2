@@ -62,9 +62,6 @@ class AdminController extends Controller implements HasMiddleware
 
         $admin = $this->repository->store($request->validated());
 
-        $admin->addMediaFromRequest('image')->toMediaCollection('images');
-
-
         $admin->roles()->sync($request->roles);
 
         return redirect()->route('admins.index')->with('success', __('Admin created successfully.'));
@@ -85,23 +82,12 @@ class AdminController extends Controller implements HasMiddleware
 
 
 
-    public function update(AdminRequest $request, $id)
+    public function update(AdminRequest $request, Admin $admin)
     {
-        $admin = $this->repository->find($id);
 
-        if ($request->has('password') && $request->password) {
-            $admin->password = $request->password;
-        } else {
-            $request->request->remove('password');
-        }
+        $this->repository->update($request->validated(), $admin);
 
-        $admin->update($request->except('password'));
         $admin->roles()->sync($request->roles);
-
-        if ($request->hasFile('image')) {
-            $admin->clearMediaCollection('images');
-            $admin->addMediaFromRequest('image')->toMediaCollection('images');
-        }
 
         return redirect()->route('admins.index')->with('success', __('Admin updated successfully.'));
     }
@@ -113,9 +99,8 @@ class AdminController extends Controller implements HasMiddleware
         return redirect()->route('admins.index')->with('success', __('Admin soft deleted successfully.'));
     }
 
-    public function forceDelete($id)
+    public function forceDelete(Admin $admin)
     {
-        $admin = Admin::withTrashed()->findOrFail($id);
         $this->repository->forceDelete($admin);
 
         return redirect()->route('admins.index')->with('success', 'تم حذف الـ Admin بشكل نهائي');
@@ -148,5 +133,5 @@ class AdminController extends Controller implements HasMiddleware
         return view('profile', get_defined_vars());
     }
 
-   
+
 }

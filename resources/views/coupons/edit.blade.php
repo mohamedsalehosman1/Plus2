@@ -15,7 +15,7 @@
                     </div>
                 @endif
 
-                <form action="{{ route('coupons.update', $coupon->id) }}" method="POST">
+                <form action="{{ route('coupons.update', $coupon) }}" method="POST">
                     @csrf
                     @method('PUT')
 
@@ -26,6 +26,7 @@
                     </div>
 
                     <div class="form-group">
+                      
                         <label for="discount_percent">{{ trans('coupons.DiscountPercent') }}</label>
                         <input type="number" id="discount_percent" name="discount_percent" class="form-control"
                             value="{{ old('discount_percent', $coupon->discount_percent) }}" required>
