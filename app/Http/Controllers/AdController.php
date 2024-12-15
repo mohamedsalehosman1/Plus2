@@ -57,11 +57,6 @@ class AdController extends Controller implements HasMiddleware
 
     public function update(AdRequest $request, Ad $ad)
     {
-
-        if (auth('vendors')->check()) {
-            $data['vendor_id'] = auth('vendors')->user()->id;
-        }
-
         $this->repository->update($request->validated(), $ad);
         return redirect()->route("ads.index")->with('success', __('Ad Updated successfully.'));
     }

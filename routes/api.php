@@ -25,12 +25,12 @@ Route::post('resend_code', [VerificationController::class, 'resendcode']);
 Route::post('request_reset_code', [ResetPasswordController::class, 'requestResetCode']);
 Route::post('reset_token', [ResetPasswordController::class, 'resetToken']);
 Route::post('update_password', [ResetPasswordController::class, 'updatePassword']);
-Route::post('send_email', [UpdateEmailController::class, 'sendemail'])->middleware('auth:sanctum');
-Route::post('update_email', [UpdateEmailController::class, 'updateemail'])->middleware('auth:sanctum');
-Route::post('change_password', [ChangePasswordController::class, 'changepassword'])->middleware('auth:sanctum');
+Route::post('send_email', [UpdateEmailController::class, 'sendEmail'])->middleware('auth:sanctum');
+Route::post('update_email', [UpdateEmailController::class, 'updateEmail'])->middleware('auth:sanctum');
+Route::post('change_password', [ChangePasswordController::class, 'changePassword'])->middleware('auth:sanctum');
 Route::apiResource('ads', AdController::class)->only('index','show');
 Route::apiResource('services', ServiceController::class)->only('index','show');
-Route::post('addwishlist', [WishlistController::class, 'addToWishlist'])->middleware('auth:sanctum');
+Route::post('add_wishlist', [WishlistController::class, 'addToWishlist'])->middleware('auth:sanctum');
 Route::get('showwishlist', [WishlistController::class, 'showWishlist'])->middleware('auth:sanctum');
 
 Route::apiResource('/vendors', VendorController::class);

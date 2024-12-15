@@ -5,29 +5,43 @@
 <script src="{{ asset('assets/js/apexcharts/apexcharts.js') }}"></script>
 <script src="{{ asset('assets/js/main.js') }}"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/js/dropify.min.js"
     integrity="sha512-8QFTrG0oeOiyWo/VM9Y8kgxdlCryqhIxVeRpWSezdRRAvarxVtwLnGroJgnVW9/XBRduxO/z1GblzPrMQoeuew=="
     crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
+
+{{-- <!-- Latest compiled and minified JavaScript -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script> --}}
+
 <script>
-    (function ($) {
-        var tfLineChart = (function () {
-            var chartBar = function () {
+    (function($) {
+        var tfLineChart = (function() {
+            var chartBar = function() {
                 var options = {
                     series: [{
-                        name: 'Total',
-                        data: [0.00, 0.00, 0.00, 0.00, 0.00, 273.22, 208.12, 0.00, 0.00, 0.00, 0.00, 0.00]
-                    }, {
-                        name: 'Pending',
-                        data: [0.00, 0.00, 0.00, 0.00, 0.00, 273.22, 208.12, 0.00, 0.00, 0.00, 0.00, 0.00]
-                    },
-                    {
-                        name: 'Delivered',
-                        data: [0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00]
-                    }, {
-                        name: 'Canceled',
-                        data: [0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00]
-                    }],
+                            name: 'Total',
+                            data: [0.00, 0.00, 0.00, 0.00, 0.00, 273.22, 208.12, 0.00, 0.00,
+                                0.00, 0.00, 0.00
+                            ]
+                        }, {
+                            name: 'Pending',
+                            data: [0.00, 0.00, 0.00, 0.00, 0.00, 273.22, 208.12, 0.00, 0.00,
+                                0.00, 0.00, 0.00
+                            ]
+                        },
+                        {
+                            name: 'Delivered',
+                            data: [0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00,
+                                0.00, 0.00
+                            ]
+                        }, {
+                            name: 'Canceled',
+                            data: [0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00,
+                                0.00, 0.00
+                            ]
+                        }
+                    ],
                     chart: {
                         type: 'bar',
                         height: 325,
@@ -58,7 +72,9 @@
                                 colors: '#212529',
                             },
                         },
-                        categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+                        categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep',
+                            'Oct', 'Nov', 'Dec'
+                        ],
                     },
                     yaxis: {
                         show: false,
@@ -68,7 +84,7 @@
                     },
                     tooltip: {
                         y: {
-                            formatter: function (val) {
+                            formatter: function(val) {
                                 return "$ " + val + ""
                             }
                         }
@@ -85,18 +101,26 @@
             };
 
             return {
-                init: function () {},
-                load: function () {
+                init: function() {},
+                load: function() {
                     chartBar();
                 },
-                resize: function () {},
+                resize: function() {},
             };
         })();
 
-        jQuery(window).on("load", function () {
+        jQuery(window).on("load", function() {
             tfLineChart.load();
         });
     })(jQuery);
 
     $('.dropify').dropify();
+</script>
+
+
+
+<script>
+    $(document).ready(function() {
+        $('.select-picker').selectpicker();
+    });
 </script>

@@ -35,7 +35,7 @@ class ResetPasswordController extends Controller
         return $this->successResponse(['code' => $resetCode]);
     }
 
-    public function resettoken(ResetTokenRequest $request)
+    public function resetToken(ResetTokenRequest $request)
     {
         $resetPassword = ResetPassword::where('email', $request->email)->first();
 

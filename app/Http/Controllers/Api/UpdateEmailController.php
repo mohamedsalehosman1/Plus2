@@ -18,7 +18,7 @@ class UpdateEmailController extends Controller
 {
     use ApiResponseTrait;
 
-    public function sendemail(UpdateEmailRequest $request)
+    public function sendEmail(UpdateEmailRequest $request)
     {
         $user = Auth::user();
         $code = Str::random(4);
@@ -32,7 +32,7 @@ class UpdateEmailController extends Controller
 
         return $this->successResponse(['code' => $code], 'تم إرسال كود التحقق الجديد إلى بريدك الإلكتروني.');
     }
-    public function updatemail(VerfiyRequest $request)
+    public function updateEmail(VerfiyRequest $request)
     {
         $user = Auth::user();
 

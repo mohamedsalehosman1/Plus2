@@ -13,11 +13,11 @@ class ChangePasswordController extends Controller
 {
     use ApiResponseTrait;
 
-    public function changepassword(ChangePasswordRequest $request)
+    public function changePassword(ChangePasswordRequest $request)
     {
         $user = Auth::user();
 
-     
+
         if (!Hash::check($request->current_password, $user->password)) {
             return $this->errorResponse('The current password is incorrect.');
         }

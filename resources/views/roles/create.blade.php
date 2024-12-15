@@ -40,13 +40,18 @@
                         <!-- Permissions Select Box -->
                         <div class="form">
                             <label for="permissions">{{ trans('roles.assign_permissions') }}</label>
-                            <select name="permissions[]" id="permissions" class="form-control" multiple>
+
+                            <select name="permissions[]" id="permissions"  title="{{ trans('roles.assign_permissions') }}" class="form-control select-picker"
+                                data-live-search="true" multiple>
                                 @foreach ($permissions as $permission)
                                     <option value="{{ $permission->id }}">
                                         {{ trans('permissions.' . $permission->name) }}
                                     </option>
                                 @endforeach
                             </select>
+
+
+
                             @error('permissions')
                                 <div class="alert alert-danger">{{ $message }}</div>
                             @enderror

@@ -10,7 +10,7 @@ class AdRepository implements CrudsInterface
 {
     public function index($vendor_id = null)
     {
-        return Ad::when(auth('vendors')->user(), function ($q) {
+        return Ad::whereHas('vendor')->when(auth('vendors')->user(), function ($q) {
             $q->where('vendor_id', auth('vendors')->user()->id);
         })->get();
     }
@@ -18,11 +18,7 @@ class AdRepository implements CrudsInterface
     public function store($data)
     {
         $model = Ad::create($data);
-
-
         $model->addMedia($data['image'])->toMediaCollection('images');
-
-
         return $model;
     }
 
@@ -59,14 +55,14 @@ class AdRepository implements CrudsInterface
         return $model->restore();
     }
 
-    public function updateStatus($data, $model)
+    public function updateStatus( $model)
     {
-        if (!$Ad->status) {
-            Ad::where('vendor_id', $Ad->vendor_id)
+        if (!$model->status) {
+            Ad::where('vendor_id', $model->vendor_id)
                 ->update(['status' => false]);
         }
 
-        $Ad->status = !$Ad->status;
-        return $Ad->save();
+        $model->status = !$model->status;
+        return $model->save();
     }
 }

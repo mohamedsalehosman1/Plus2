@@ -11,7 +11,6 @@ use Illuminate\Support\Facades\Auth;
 class AuthAdminController extends Controller
 {
 
-    //
     public function index()
     {
         return view('login');
@@ -19,9 +18,8 @@ class AuthAdminController extends Controller
     public function login(AdminLoginRequest $request)
     {
 
-        $credintials = $request->validated();
 
-        if (Auth::guard('admins')->attempt($credintials)) {
+        if (Auth::guard('admins')->attempt( $request->validated())) {
             return redirect()->route('home');
         }
 

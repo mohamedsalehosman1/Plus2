@@ -51,7 +51,7 @@ class ServiceController extends Controller
 
     public function update(ServiceRequest $request, Service $service)
     {
-         $this->repository->update($request->validated(), $service);
+        $this->repository->update($request->validated(), $service);
 
         return redirect()->route('services.index');
     }

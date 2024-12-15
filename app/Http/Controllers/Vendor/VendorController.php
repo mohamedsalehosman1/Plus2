@@ -88,8 +88,21 @@ class VendorController extends Controller implements HasMiddleware
 
     public function destroy(Vendor $vendor)
     {
-        $this->repository->destroy($vendor);
-        return redirect()->route('vendors.index')->with('success', __('Vendor soft deleted successfully.'));
+        if($this->canDelete($vendor)){
+            $this->repository->destroy($vendor);
+            return redirect()->route('vendors.index')->with('success', __('Vendor soft deleted successfully.'));
+        }
+
+        return redirect()->route('vendors.index')->with('error', __('Vendor cant delele due relation to other data'));
+    }
+
+
+    private function canDelete($vendor)
+    {
+        $adsCount =  $vendor->ads()->exists();
+        $couponsCount =  $vendor->coupons()->exists();
+
+        return !$adsCount && !$couponsCount == false;
     }
 
     public function trash()
@@ -116,5 +129,4 @@ class VendorController extends Controller implements HasMiddleware
         $vendor = Auth::guard('vendors')->user();
         return view('profile', compact('vendor'));
     }
-
-    }
+}
