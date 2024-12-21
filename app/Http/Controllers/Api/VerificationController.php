@@ -18,7 +18,7 @@ class VerificationController extends Controller
     {
         $verification = Verification::where('email', $request->email)->first();
 
-      
+
 
         if ($verification->code !== $request->code) {
             return $this->errorResponse('Invalid verification code. Please check and try again.');

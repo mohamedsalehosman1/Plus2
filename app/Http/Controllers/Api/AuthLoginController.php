@@ -35,5 +35,21 @@ class AuthLoginController extends Controller
             return $this->errorResponse('Error with email or password.');
         }
     }
+    public function checkLoginStatus()
+    {
+        $user = user(); // استدعاء الدالة التي كتبتها لفحص حالة التوكن
 
+        if ($user) {
+            // إذا كان المستخدم مسجل الدخول
+            return response()->json([
+                'status' => 'logged_in',
+                'user' => $user // إرجاع بيانات المستخدم المسجل
+            ], 200);
+        } else {
+            // إذا لم يكن المستخدم مسجل الدخول
+            return response()->json([
+                'status' => 'guest' // مستخدم زائر لم يسجل الدخول
+            ], 200);
+        }
+    }
 }

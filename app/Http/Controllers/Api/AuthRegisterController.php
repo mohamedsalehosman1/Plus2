@@ -20,7 +20,7 @@ class AuthRegisterController extends Controller
 
         $user = User::create($request->validated());
 
-        $code = Str::random(4);
+        $code = rand(1000, 9999);
 
         $user->verification()->create([
             'code' => $code,

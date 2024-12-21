@@ -34,4 +34,4 @@ Route::post('add_wishlist', [WishlistController::class, 'addToWishlist'])->middl
 Route::get('showwishlist', [WishlistController::class, 'showWishlist'])->middleware('auth:sanctum');
 
 Route::apiResource('/vendors', VendorController::class);
-Route::get('check-login', [AuthLoginController::class, 'checkLoginStatus']);
+Route::get('check_login', [AuthLoginController::class, 'checkLoginStatus']);

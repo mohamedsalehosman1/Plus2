@@ -27,8 +27,8 @@
 
                 <!-- Main Content Section -->
                 <div class="section-content-right">
-                    @yield('content')
                 </div>
+                @yield('content')
             </div>
         </div>
     </div>
